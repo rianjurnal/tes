@@ -1,0 +1,1266 @@
+{
+  "metadata": {
+    "judul": "STANDAR OPERASIONAL PROSEDUR",
+    "subjudul": "TOKO KOMPUTER, AKSESORI, DAN SERVIS",
+    "nama_toko": "[Nama Toko]",
+    "deskripsi": "Disusun untuk mengatur layanan penjualan komputer, aksesori, penerimaan servis, pengerjaan teknis, pengelolaan stok, transaksi keuangan, dan pelayanan pelanggan.",
+    "versi": "1.0",
+    "tanggal_berlaku": "19 Oktober 2026",
+    "disusun_oleh": "Tim Operasional",
+    "diperiksa_oleh": "Manajer Operasional",
+    "disetujui_oleh": "Pemilik / Penanggung Jawab Toko",
+    "berlaku_untuk": "Admin, Teknisi Utama, Teknisi Pendukung",
+    "frekuensi_evaluasi": "Minimal 1 kali setiap 3 bulan atau saat ada perubahan proses kerja",
+    "catatan_pengesahan": "Dokumen SOP ini berlaku sejak tanggal pengesahan oleh Pemilik / Penanggung Jawab Toko. Setiap anggota tim wajib membaca, memahami, dan menandatangani dokumen ini sebagai bukti persetujuan."
+  },
+  "sections": [
+    {
+      "id": "sop-1",
+      "nomor": "1",
+      "judul": "Tujuan dan Ruang Lingkup SOP",
+      "kategori": "Umum & Manajemen",
+      "icon": "🎯",
+      "ringkasan": "SOP ini dibuat untuk memastikan operasional toko komputer, aksesori, dan servis berjalan tertib, tercatat, profesional, dan mudah diawasi. SOP ini juga berfungsi untuk mengurangi risiko salah paham dengan pelanggan, kehilangan stok, ketidaksesuaian kas, keterlambatan servis, serta komplain garansi.",
+      "blocks": [
+        {
+          "id": "b-1-1",
+          "tipe": "list",
+          "judul": "1.1 Tujuan",
+          "items": [
+            "Menjaga kualitas layanan teknis melalui proses diagnosa, konfirmasi biaya, pengerjaan, dan quality control.",
+            "Memastikan setiap transaksi penjualan dan servis memiliki bukti pencatatan yang jelas.",
+            "Menetapkan alur kerja standar untuk penjualan, servis, stok, keuangan, dan pelayanan pelanggan.",
+            "Membantu pemilik toko mengawasi kinerja admin dan teknisi secara objektif.",
+            "Meningkatkan kepercayaan pelanggan melalui pelayanan yang transparan dan konsisten."
+          ]
+        },
+        {
+          "id": "b-1-2",
+          "tipe": "list",
+          "judul": "1.2 Ruang Lingkup",
+          "items": [
+            "Penjualan komputer, laptop, printer, perangkat jaringan, dan aksesori.",
+            "Penerimaan dan pencatatan barang servis.",
+            "Diagnosa, pengerjaan, quality control, dan garansi servis.",
+            "Pengelolaan stok barang masuk, barang keluar, dan stok opname.",
+            "Pencatatan kas harian, pembayaran, pengeluaran, dan laporan harian.",
+            "Layanan pelanggan melalui toko fisik, WhatsApp, telepon, dan media online lainnya.",
+            "Penanganan komplain pelanggan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-2",
+      "nomor": "2",
+      "judul": "Struktur Tim dan Pembagian Tugas",
+      "kategori": "Umum & Manajemen",
+      "icon": "👥",
+      "ringkasan": "Prinsip kerja utama: admin mengatur komunikasi dan pencatatan, teknisi mengatur aspek teknis, sedangkan pemilik toko mengatur keputusan bisnis dan kebijakan harga.",
+      "blocks": [
+        {
+          "id": "b-2-1",
+          "tipe": "table",
+          "judul": "Pembagian Tugas Tim",
+          "headers": [
+            "Posisi",
+            "Tanggung Jawab Utama"
+          ],
+          "rows": [
+            [
+              "Pemilik / Penanggung Jawab Toko",
+              "Mengambil keputusan harga, pembelian stok, kerja sama supplier, evaluasi keuangan, strategi promosi, persetujuan diskon, dan pengawasan operasional toko."
+            ],
+            [
+              "Admin Toko",
+              "Melayani pelanggan, menjawab WhatsApp, membuat nota, mencatat servis, mengatur antrean pekerjaan teknisi, mengelola stok, mencatat kas harian, dan membuat laporan harian."
+            ],
+            [
+              "Teknisi Utama",
+              "Melakukan diagnosa kerusakan, menentukan estimasi biaya teknis, mengerjakan servis utama, melakukan quality control, dan memberi arahan kepada teknisi pendukung."
+            ],
+            [
+              "Teknisi Pendukung",
+              "Membantu pengecekan awal, instalasi software, cleaning, bongkar-pasang ringan, packing, dan pekerjaan teknis lain berdasarkan arahan teknisi utama."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-3",
+      "nomor": "3",
+      "judul": "SOP Pembukaan Toko",
+      "kategori": "Operasional Harian",
+      "icon": "🌅",
+      "ringkasan": "3.1 Tujuan: Memastikan toko siap melayani pelanggan sejak jam operasional dimulai.",
+      "blocks": [
+        {
+          "id": "b-3-1",
+          "tipe": "steps",
+          "judul": "3.2 Langkah Kerja",
+          "items": [
+            "Admin datang minimal 5–30 menit sebelum toko dibuka.",
+            "Admin membuka toko dan menyalakan lampu, komputer kasir, printer, internet, serta perangkat display.",
+            "Admin mengecek kebersihan area toko, meja display, etalase, dan ruang servis.",
+            "Admin mengecek uang kas awal dan memastikan nilainya sesuai dengan laporan penutupan hari sebelumnya.",
+            "Admin mengecek daftar servis yang belum selesai dan barang yang siap diambil pelanggan.",
+            "Admin menyampaikan prioritas pekerjaan servis kepada teknisi utama.",
+            "Teknisi mengecek meja kerja, alat servis, sparepart, dan perangkat pelanggan yang sedang dikerjakan.",
+            "Toko dinyatakan siap melayani pelanggan."
+          ]
+        },
+        {
+          "id": "b-3-2",
+          "tipe": "checklist",
+          "judul": "3.3 Checklist Pembukaan Toko",
+          "items": [
+            {
+              "teks": "Lampu, komputer kasir, printer, dan internet menyala",
+              "checked": false
+            },
+            {
+              "teks": "Etalase dan area display bersih",
+              "checked": false
+            },
+            {
+              "teks": "Kas awal sesuai laporan sebelumnya",
+              "checked": false
+            },
+            {
+              "teks": "Daftar servis hari ini sudah diperiksa",
+              "checked": false
+            },
+            {
+              "teks": "Meja teknisi dan alat kerja siap digunakan",
+              "checked": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-4",
+      "nomor": "4",
+      "judul": "SOP Penjualan Komputer dan Aksesori",
+      "kategori": "Penjualan & Pelanggan",
+      "icon": "🛒",
+      "ringkasan": "4.1 Tujuan: Memberikan pelayanan penjualan yang cepat, jelas, dan tidak menimbulkan salah paham dengan pelanggan.",
+      "blocks": [
+        {
+          "id": "b-4-1",
+          "tipe": "steps",
+          "judul": "4.2 Alur Penjualan",
+          "items": [
+            "Admin menyambut pelanggan dan menanyakan kebutuhan utama.",
+            "Admin menggali kebutuhan pelanggan: penggunaan, budget, preferensi merek, dan kebutuhan tambahan.",
+            "Admin memberikan maksimal 2–3 rekomendasi produk agar pelanggan tidak bingung.",
+            "Admin menjelaskan harga, kelengkapan, garansi, ketentuan retur, dan biaya tambahan bila ada.",
+            "Admin membuat nota penjualan setelah pelanggan setuju membeli.",
+            "Admin atau teknisi mengecek barang sebelum diserahkan kepada pelanggan.",
+            "Pelanggan melakukan pembayaran melalui tunai, transfer, QRIS, atau metode lain yang tersedia.",
+            "Barang diserahkan setelah pembayaran diterima dan nota diberikan kepada pelanggan."
+          ]
+        },
+        {
+          "id": "b-4-2",
+          "tipe": "list",
+          "judul": "4.3 Data Wajib pada Nota Penjualan",
+          "items": [
+            "Tanggal transaksi.",
+            "Nama pelanggan dan nomor HP.",
+            "Nama barang, merek, tipe, dan serial number jika ada.",
+            "Harga barang dan diskon jika ada.",
+            "Metode pembayaran.",
+            "Keterangan garansi.",
+            "Nama admin yang melayani."
+          ]
+        },
+        {
+          "id": "b-4-3",
+          "tipe": "chat_templates",
+          "judul": "4.4 Kalimat Layanan yang Disarankan",
+          "items": [
+            {
+              "label": "Pelanggan baru datang",
+              "teks": "Selamat datang, Kak. Sedang cari laptop, komputer, aksesori, atau ingin servis?"
+            },
+            {
+              "label": "Menggali kebutuhan",
+              "teks": "Dipakai untuk kuliah, kerja kantor, desain, editing, gaming, atau kebutuhan kasir?"
+            },
+            {
+              "label": "Menanyakan budget",
+              "teks": "Budget yang disiapkan sekitar berapa, Kak? Supaya kami bisa rekomendasikan yang paling sesuai."
+            },
+            {
+              "label": "Cek barang sebelum diserahkan",
+              "teks": "Sebelum dibawa pulang, kita cek dulu unitnya ya, Kak, supaya sama-sama jelas kondisinya."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-5",
+      "nomor": "5",
+      "judul": "SOP Penerimaan Servis",
+      "kategori": "Layanan Servis",
+      "icon": "🛠️",
+      "ringkasan": "5.1 Tujuan: Menghindari salah paham terkait kondisi barang, biaya servis, estimasi waktu, kelengkapan barang, dan tanggung jawab toko.",
+      "blocks": [
+        {
+          "id": "b-5-1",
+          "tipe": "steps",
+          "judul": "5.2 Alur Penerimaan Servis",
+          "items": [
+            "Admin menerima pelanggan dan menanyakan keluhan utama.",
+            "Admin mencatat data pelanggan dan data perangkat.",
+            "Admin atau teknisi mencatat kondisi fisik awal perangkat.",
+            "Admin mencatat kelengkapan yang dititipkan: charger, tas, mouse, kabel, atau adaptor.",
+            "Admin memberi nomor servis dan membuat nota servis.",
+            "Admin menjelaskan estimasi waktu pengecekan dan ketentuan biaya pengecekan jika ada.",
+            "Barang diberi label nomor servis dan disimpan di area servis.",
+            "Teknisi melakukan pengecekan sesuai antrean pekerjaan."
+          ]
+        },
+        {
+          "id": "b-5-2",
+          "tipe": "table",
+          "judul": "5.3 Data Wajib Penerimaan Servis",
+          "headers": [
+            "Kategori Data",
+            "Isi yang Harus Dicatat"
+          ],
+          "rows": [
+            [
+              "Data Pelanggan",
+              "Nama, nomor WhatsApp, alamat singkat bila diperlukan."
+            ],
+            [
+              "Data Perangkat",
+              "Jenis perangkat, merek, tipe, serial number bila ada."
+            ],
+            [
+              "Keluhan",
+              "Keluhan utama, waktu mulai bermasalah, riwayat jatuh/kena air bila ada."
+            ],
+            [
+              "Kelengkapan",
+              "Charger, baterai, tas, kabel, adaptor, mouse, atau aksesori lain."
+            ],
+            [
+              "Kondisi Fisik Awal",
+              "Lecet, retak, baut kurang, engsel longgar, layar bergaris, keyboard rusak, baterai kembung, segel rusak."
+            ],
+            [
+              "Akses Perangkat",
+              "Password perangkat hanya dicatat bila diperlukan dan disimpan secara terbatas."
+            ]
+          ]
+        },
+        {
+          "id": "b-5-3",
+          "tipe": "alert",
+          "judul": "Penting!",
+          "items": [
+            "Setiap barang servis harus memiliki nomor servis. Jangan menerima barang servis hanya berdasarkan ingatan atau chat tanpa pencatatan resmi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-6",
+      "nomor": "6",
+      "judul": "SOP Diagnosa Teknisi",
+      "kategori": "Layanan Servis",
+      "icon": "🔍",
+      "ringkasan": "6.1 Tujuan: Memastikan teknisi bekerja berdasarkan urutan pengecekan yang rapi dan tercatat, bukan berdasarkan dugaan tanpa bukti pemeriksaan.",
+      "blocks": [
+        {
+          "id": "b-6-1",
+          "tipe": "steps",
+          "judul": "6.2 Langkah Kerja Teknisi",
+          "items": [
+            "Teknisi mengambil unit berdasarkan nomor nota servis.",
+            "Teknisi membaca keluhan pelanggan dan catatan admin.",
+            "Teknisi memeriksa kondisi fisik perangkat sebelum membuka atau menguji perangkat.",
+            "Teknisi melakukan pengecekan awal sesuai jenis keluhan.",
+            "Teknisi mengidentifikasi kemungkinan penyebab kerusakan.",
+            "Teknisi mencatat hasil diagnosa dan rekomendasi tindakan.",
+            "Teknisi menyampaikan estimasi biaya dan waktu pengerjaan kepada admin.",
+            "Admin menghubungi pelanggan untuk meminta persetujuan."
+          ]
+        },
+        {
+          "id": "b-6-2",
+          "tipe": "table",
+          "judul": "6.3 Format Ringkas Hasil Diagnosa",
+          "headers": [
+            "No. Servis",
+            "Perangkat",
+            "Keluhan",
+            "Hasil Diagnosa",
+            "Est. Biaya/Waktu"
+          ],
+          "rows": [
+            [
+              "SV-20260604-001",
+              "Laptop Asus",
+              "Mati total",
+              "Indikasi kendala IC power",
+              "Rp450.000 / 2–3 hari kerja"
+            ],
+            [
+              "SV-20260604-002",
+              "Printer Epson",
+              "Tidak keluar tinta",
+              "Head buntu, perlu cleaning mendalam",
+              "Rp150.000 / 1 hari kerja"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-7",
+      "nomor": "7",
+      "judul": "SOP Konfirmasi Biaya Servis",
+      "kategori": "Layanan Servis",
+      "icon": "💬",
+      "ringkasan": "7.1 Prinsip Utama: Tidak ada pekerjaan servis berbayar yang boleh dilakukan sebelum pelanggan menyetujui biaya, estimasi waktu, dan tindakan servis.",
+      "blocks": [
+        {
+          "id": "b-7-1",
+          "tipe": "steps",
+          "judul": "7.2 Alur Konfirmasi",
+          "items": [
+            "Teknisi menyerahkan hasil diagnosa kepada admin.",
+            "Admin menghubungi pelanggan melalui WhatsApp atau telepon.",
+            "Admin menjelaskan kerusakan, tindakan yang disarankan, estimasi biaya, dan estimasi waktu.",
+            "Pelanggan memilih: setuju atau tidak setuju.",
+            "Admin mencatat keputusan pelanggan di buku / sistem servis.",
+            "Teknisi mulai mengerjakan servis hanya setelah ada persetujuan pelanggan."
+          ]
+        },
+        {
+          "id": "b-7-2",
+          "tipe": "chat_templates",
+          "judul": "7.3 Template WhatsApp Konfirmasi Biaya",
+          "items": [
+            {
+              "label": "Menyampaikan hasil diagnosa",
+              "teks": "Halo Kak, kami dari [Nama Toko]. Untuk [jenis perangkat/merek] atas nama Kak [nama], hasil pengecekan teknisi menunjukkan kendala pada bagian [hasil diagnosa]. Estimasi biaya servis Rp[biaya] dengan waktu pengerjaan [estimasi waktu]. Apakah servisnya ingin dilanjutkan?"
+            },
+            {
+              "label": "Pelanggan setuju",
+              "teks": "Baik Kak, kami lanjutkan proses servisnya. Nanti kami kabari kembali setelah selesai."
+            },
+            {
+              "label": "Pelanggan tidak setuju",
+              "teks": "Baik Kak, servis tidak kami lanjutkan. Unit bisa diambil kembali di toko. Untuk biaya pengecekan sebesar Rp[biaya pengecekan] sesuai ketentuan awal."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-8",
+      "nomor": "8",
+      "judul": "SOP Pengerjaan Servis",
+      "kategori": "Layanan Servis",
+      "icon": "⚙️",
+      "ringkasan": "8.1 Tujuan: Memastikan pekerjaan servis dilakukan secara tertib, aman, dan dapat dipantau progresnya.",
+      "blocks": [
+        {
+          "id": "b-8-1",
+          "tipe": "steps",
+          "judul": "8.2 Langkah Kerja",
+          "items": [
+            "Teknisi mengambil unit yang sudah disetujui pelanggan.",
+            "Teknisi menyiapkan alat, sparepart, dan area kerja.",
+            "Teknisi mengerjakan servis sesuai hasil diagnosa yang sudah disetujui.",
+            "Jika ditemukan kerusakan tambahan, teknisi wajib berhenti dan melapor kepada admin.",
+            "Admin menghubungi pelanggan untuk konfirmasi biaya tambahan.",
+            "Teknisi melanjutkan pekerjaan hanya setelah pelanggan menyetujui biaya tambahan.",
+            "Setelah pekerjaan selesai, teknisi melakukan pengujian awal.",
+            "Unit masuk ke proses quality control."
+          ]
+        },
+        {
+          "id": "b-8-2",
+          "tipe": "alert",
+          "judul": "8.3 Larangan untuk Teknisi",
+          "items": [
+            "Mengganti sparepart tanpa persetujuan pelanggan.",
+            "Menghapus data pelanggan tanpa izin tertulis atau konfirmasi jelas.",
+            "Menggunakan perangkat pelanggan untuk keperluan pribadi.",
+            "Membuka file pribadi pelanggan yang tidak berkaitan dengan pekerjaan servis.",
+            "Menjanjikan hasil yang belum pasti.",
+            "Menentukan harga langsung kepada pelanggan tanpa sepengetahuan admin atau pemilik toko."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-9",
+      "nomor": "9",
+      "judul": "SOP Quality Control Servis",
+      "kategori": "Layanan Servis",
+      "icon": "✅",
+      "ringkasan": "9.1 Tujuan: Memastikan perangkat benar-benar layak diserahkan kembali kepada pelanggan setelah pekerjaan servis selesai.",
+      "blocks": [
+        {
+          "id": "b-9-1",
+          "tipe": "checklist",
+          "judul": "9.2 Checklist QC Laptop / PC",
+          "items": [
+            {
+              "teks": "Perangkat menyala normal",
+              "checked": false
+            },
+            {
+              "teks": "Booting normal",
+              "checked": false
+            },
+            {
+              "teks": "Keyboard dan touchpad berfungsi",
+              "checked": false
+            },
+            {
+              "teks": "Port USB berfungsi",
+              "checked": false
+            },
+            {
+              "teks": "WiFi dan bluetooth berfungsi jika tersedia",
+              "checked": false
+            },
+            {
+              "teks": "Speaker dan kamera berfungsi jika diperlukan",
+              "checked": false
+            },
+            {
+              "teks": "Charger dan baterai terbaca normal",
+              "checked": false
+            },
+            {
+              "teks": "Suhu perangkat wajar setelah diuji",
+              "checked": false
+            },
+            {
+              "teks": "Keluhan utama pelanggan sudah selesai",
+              "checked": false
+            },
+            {
+              "teks": "Data pelanggan tetap aman",
+              "checked": false
+            }
+          ]
+        },
+        {
+          "id": "b-9-2",
+          "tipe": "checklist",
+          "judul": "9.3 Checklist QC Printer",
+          "items": [
+            {
+              "teks": "Printer menyala normal",
+              "checked": false
+            },
+            {
+              "teks": "Printer bisa menarik kertas",
+              "checked": false
+            },
+            {
+              "teks": "Hasil cetak normal",
+              "checked": false
+            },
+            {
+              "teks": "Tidak muncul error",
+              "checked": false
+            },
+            {
+              "teks": "Cartridge atau sistem tinta normal",
+              "checked": false
+            },
+            {
+              "teks": "Koneksi USB/WiFi berfungsi jika tersedia",
+              "checked": false
+            },
+            {
+              "teks": "Test print berhasil",
+              "checked": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-10",
+      "nomor": "10",
+      "judul": "SOP Pengambilan Barang Servis",
+      "kategori": "Layanan Servis",
+      "icon": "📦",
+      "ringkasan": "Prosedur penyerahan kembali unit servis yang telah selesai dan lulus QC kepada pelanggan.",
+      "blocks": [
+        {
+          "id": "b-10-1",
+          "tipe": "steps",
+          "judul": "10.1 Alur Pengambilan",
+          "items": [
+            "Admin menghubungi pelanggan bahwa barang sudah selesai.",
+            "Pelanggan datang membawa nota servis atau menunjukkan identitas yang sesuai.",
+            "Admin mengambil unit sesuai nomor nota servis.",
+            "Admin atau teknisi menunjukkan hasil servis kepada pelanggan.",
+            "Pelanggan mengecek perangkat di toko.",
+            "Admin menjelaskan garansi servis secara tertulis dan lisan.",
+            "Pelanggan melakukan pembayaran jika belum membayar.",
+            "Admin membuat nota pembayaran dan menyerahkan barang kepada pelanggan."
+          ]
+        },
+        {
+          "id": "b-10-2",
+          "tipe": "chat_templates",
+          "judul": "10.2 Kalimat yang Disarankan",
+          "items": [
+            {
+              "label": "Penyerahan Barang & Penjelasan Garansi",
+              "teks": "Servisnya sudah selesai, Kak. Silakan dicek dulu di toko. Untuk servis ini ada garansi pengerjaan selama [jumlah hari] hari, selama kerusakannya masih pada bagian yang sama dan tidak ada kerusakan baru akibat penggunaan."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-11",
+      "nomor": "11",
+      "judul": "SOP Garansi Servis",
+      "kategori": "Layanan Servis",
+      "icon": "🛡️",
+      "ringkasan": "Ketentuan klaim garansi pengerjaan servis agar adil dan jelas bagi pelanggan maupun toko.",
+      "blocks": [
+        {
+          "id": "b-11-1",
+          "tipe": "table",
+          "judul": "11.1 Ketentuan Garansi",
+          "headers": [
+            "Garansi Berlaku Jika",
+            "Garansi Tidak Berlaku Jika"
+          ],
+          "rows": [
+            [
+              "Kerusakan sama dengan keluhan awal.",
+              "Perangkat jatuh, terbentur, atau pecah setelah diambil."
+            ],
+            [
+              "Tidak ada kerusakan fisik baru.",
+              "Perangkat terkena cairan atau korsleting listrik."
+            ],
+            [
+              "Perangkat tidak dibongkar oleh pihak lain.",
+              "Perangkat dibongkar sendiri atau oleh toko lain."
+            ],
+            [
+              "Keluhan masih berada pada bagian yang sama dengan tindakan servis.",
+              "Kerusakan berbeda dari keluhan awal."
+            ],
+            [
+              "Pelanggan membawa nota servis.",
+              "Kerusakan software akibat instalasi pelanggan sendiri atau terkena virus setelah servis."
+            ]
+          ]
+        },
+        {
+          "id": "b-11-2",
+          "tipe": "chat_templates",
+          "judul": "11.2 Redaksi Garansi pada Nota",
+          "items": [
+            {
+              "label": "Teks Cetak Nota Servis",
+              "teks": "Garansi servis berlaku [7/14/30] hari untuk kerusakan yang sama. Garansi tidak berlaku apabila perangkat terkena air, jatuh, dibongkar pihak lain, mengalami kerusakan berbeda dari keluhan awal, atau rusak akibat kesalahan penggunaan setelah barang diambil."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-12",
+      "nomor": "12",
+      "judul": "SOP Pengelolaan Stok Barang",
+      "kategori": "Stok & Keuangan",
+      "icon": "📋",
+      "ringkasan": "12.1 Tujuan: Mencegah stok hilang, stok kosong, data stok tidak sesuai, dan kerugian akibat barang kecil bernilai tinggi tidak tercatat.",
+      "blocks": [
+        {
+          "id": "b-12-1",
+          "tipe": "steps",
+          "judul": "12.2 Barang Masuk",
+          "items": [
+            "Barang datang dari supplier.",
+            "Admin mengecek jumlah barang dan kondisi fisik.",
+            "Admin mencocokkan barang dengan invoice supplier.",
+            "Admin memberi kode barang atau label harga jika diperlukan.",
+            "Admin memasukkan data barang ke buku stok atau Google Sheets.",
+            "Barang disusun di etalase, gudang, atau area display."
+          ]
+        },
+        {
+          "id": "b-12-2",
+          "tipe": "steps",
+          "judul": "12.3 Barang Keluar",
+          "items": [
+            "Barang terjual kepada pelanggan.",
+            "Admin membuat nota penjualan.",
+            "Admin mengurangi jumlah stok di buku stok / sistem.",
+            "Admin mencatat metode pembayaran.",
+            "Admin menyimpan bukti transaksi."
+          ]
+        },
+        {
+          "id": "b-12-3",
+          "tipe": "table",
+          "judul": "12.4 Frekuensi Stok Opname",
+          "headers": [
+            "Jenis Barang",
+            "Frekuensi Pemeriksaan"
+          ],
+          "rows": [
+            [
+              "Barang kecil cepat laku (kabel, flashdisk, mouse, headset)",
+              "Harian atau minimal 2–3 kali seminggu"
+            ],
+            [
+              "Aksesori umum (keyboard, adaptor, charger, tas laptop)",
+              "Mingguan"
+            ],
+            [
+              "Barang bernilai tinggi (laptop, SSD, RAM, printer, monitor)",
+              "Mingguan dan setiap ada transaksi"
+            ],
+            [
+              "Seluruh stok toko",
+              "Bulanan"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-13",
+      "nomor": "13",
+      "judul": "SOP Keuangan Harian",
+      "kategori": "Stok & Keuangan",
+      "icon": "💰",
+      "ringkasan": "13.1 Tujuan: Memastikan semua uang masuk dan keluar tercatat rapi, dapat diperiksa, dan tidak bercampur dengan uang pribadi.",
+      "blocks": [
+        {
+          "id": "b-13-1",
+          "tipe": "list",
+          "judul": "13.2 Komponen Laporan Harian",
+          "items": [
+            "Total penjualan barang.",
+            "Total pembayaran servis.",
+            "Total uang tunai.",
+            "Total transfer / QRIS.",
+            "Pengeluaran toko.",
+            "Piutang pelanggan jika ada.",
+            "Barang yang belum dibayar lunas.",
+            "Saldo kas akhir."
+          ]
+        },
+        {
+          "id": "b-13-2",
+          "tipe": "table",
+          "judul": "13.3 Contoh Format Laporan Harian",
+          "headers": [
+            "Tanggal",
+            "Penjualan Barang",
+            "Servis",
+            "Pengeluaran",
+            "Tunai",
+            "Transfer/QRIS",
+            "Total Bersih"
+          ],
+          "rows": [
+            [
+              "04/06/2026",
+              "Rp2.000.000",
+              "Rp750.000",
+              "Rp150.000",
+              "Rp1.200.000",
+              "Rp1.400.000",
+              "Rp2.600.000"
+            ]
+          ]
+        },
+        {
+          "id": "b-13-3",
+          "tipe": "alert",
+          "judul": "13.4 Aturan Keuangan",
+          "items": [
+            "Uang toko tidak boleh dicampur dengan uang pribadi.",
+            "Semua transaksi harus memiliki nota.",
+            "Semua pengeluaran harus memiliki bukti.",
+            "Diskon harus disetujui pemilik toko.",
+            "Pembatalan transaksi harus dicatat.",
+            "Pembayaran servis sebaiknya dilakukan saat barang diambil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-14",
+      "nomor": "14",
+      "judul": "SOP Layanan WhatsApp dan Online",
+      "kategori": "Penjualan & Pelanggan",
+      "icon": "📱",
+      "ringkasan": "14.1 Standar Respons: Admin membalas chat pelanggan maksimal 5–15 menit pada jam kerja, kecuali saat sedang melayani pelanggan langsung atau terjadi kendala teknis.",
+      "blocks": [
+        {
+          "id": "b-14-1",
+          "tipe": "chat_templates",
+          "judul": "14.2 Template Balasan",
+          "items": [
+            {
+              "label": "Balasan awal",
+              "teks": "Halo Kak, selamat datang di [Nama Toko]. Ada yang bisa kami bantu? Untuk pembelian komputer, aksesori, atau servis?"
+            },
+            {
+              "label": "Konsultasi servis",
+              "teks": "Untuk servis, Kakak bisa kirimkan merek/tipe perangkat dan keluhannya. Jika memungkinkan, sertakan foto atau video kendalanya agar teknisi bisa bantu cek awal."
+            },
+            {
+              "label": "Informasi produk",
+              "teks": "Produk tersebut tersedia, Kak. Harga Rp[...]. Garansi [...]. Bisa langsung datang ke toko atau kami bantu siapkan terlebih dahulu."
+            },
+            {
+              "label": "Kalimat aman",
+              "teks": "Kami cek dulu ya, Kak. Setelah teknisi memastikan kendalanya, kami kabari estimasi biaya dan waktunya."
+            }
+          ]
+        },
+        {
+          "id": "b-14-2",
+          "tipe": "alert",
+          "judul": "14.3 Larangan Komunikasi",
+          "items": [
+            "Jangan menjawab “pasti bisa” sebelum teknisi memeriksa perangkat.",
+            "Jangan menjanjikan harga paling murah tanpa menghitung sparepart dan tingkat kesulitan.",
+            "Jangan menjanjikan selesai hari ini jika antrean teknisi padat.",
+            "Jangan menghapus bukti chat terkait konfirmasi biaya atau persetujuan pelanggan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-15",
+      "nomor": "15",
+      "judul": "SOP Komplain Pelanggan",
+      "kategori": "Penjualan & Pelanggan",
+      "icon": "🤝",
+      "ringkasan": "15.1 Tujuan: Menangani keluhan pelanggan secara tenang, objektif, dan sesuai ketentuan garansi tanpa memperburuk hubungan dengan pelanggan.",
+      "blocks": [
+        {
+          "id": "b-15-1",
+          "tipe": "steps",
+          "judul": "15.2 Alur Penanganan Komplain",
+          "items": [
+            "Admin mendengarkan keluhan pelanggan tanpa memotong pembicaraan.",
+            "Admin meminta nota transaksi atau nota servis.",
+            "Admin mengecek riwayat transaksi, tanggal servis, dan ketentuan garansi.",
+            "Admin meminta teknisi memeriksa ulang barang bila diperlukan.",
+            "Admin melapor kepada pemilik toko jika komplain berpotensi menimbulkan penggantian barang, refund, atau konflik.",
+            "Admin memberikan solusi berdasarkan hasil pengecekan dan ketentuan garansi.",
+            "Admin mencatat komplain dalam log komplain pelanggan."
+          ]
+        },
+        {
+          "id": "b-15-2",
+          "tipe": "chat_templates",
+          "judul": "15.3 Kalimat yang Disarankan",
+          "items": [
+            {
+              "label": "Respons Penerimaan Komplain",
+              "teks": "Baik Kak, kami cek dulu berdasarkan nota dan riwayat servisnya. Kalau memang masih masuk garansi dan kendalanya sama, kami bantu tangani sesuai ketentuan garansi."
+            }
+          ]
+        },
+        {
+          "id": "b-15-3",
+          "tipe": "alert",
+          "judul": "15.4 Larangan Saat Menangani Komplain",
+          "items": [
+            "Menyalahkan pelanggan secara langsung.",
+            "Berdebat dengan pelanggan.",
+            "Memberi jawaban kasar atau defensif.",
+            "Menjanjikan ganti rugi tanpa persetujuan pemilik toko.",
+            "Menghapus bukti chat, nota, atau catatan servis."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-16",
+      "nomor": "16",
+      "judul": "SOP Penutupan Toko",
+      "kategori": "Operasional Harian",
+      "icon": "🌙",
+      "ringkasan": "Prosedur penutupan operasional toko, pengamanan kas, dan pemeriksaan keamanan perangkat.",
+      "blocks": [
+        {
+          "id": "b-16-1",
+          "tipe": "steps",
+          "judul": "16.1 Langkah Kerja",
+          "items": [
+            "Admin menghitung uang kas.",
+            "Admin mencocokkan uang dengan laporan transaksi.",
+            "Admin mencatat transaksi hari itu.",
+            "Admin mengecek barang display dan etalase.",
+            "Admin mengecek daftar servis masuk, servis selesai, dan servis yang belum selesai.",
+            "Teknisi merapikan meja kerja dan alat servis.",
+            "Teknisi mengamankan perangkat pelanggan di area penyimpanan.",
+            "Admin mematikan komputer kasir, printer, lampu, dan perangkat elektronik yang tidak perlu menyala.",
+            "Toko dikunci dengan aman."
+          ]
+        },
+        {
+          "id": "b-16-2",
+          "tipe": "checklist",
+          "judul": "16.2 Checklist Penutupan Toko",
+          "items": [
+            {
+              "teks": "Kas sudah dihitung dan cocok dengan laporan",
+              "checked": false
+            },
+            {
+              "teks": "Nota sudah direkap",
+              "checked": false
+            },
+            {
+              "teks": "Barang display aman",
+              "checked": false
+            },
+            {
+              "teks": "Perangkat pelanggan disimpan aman",
+              "checked": false
+            },
+            {
+              "teks": "Ruang servis rapi",
+              "checked": false
+            },
+            {
+              "teks": "Komputer, printer, dan listrik yang tidak perlu sudah dimatikan",
+              "checked": false
+            },
+            {
+              "teks": "Pintu, etalase, dan lemari terkunci",
+              "checked": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-17",
+      "nomor": "17",
+      "judul": "Dokumen Pendukung dan KPI",
+      "kategori": "Umum & Manajemen",
+      "icon": "📊",
+      "ringkasan": "Daftar kelengkapan dokumen administrasi toko dan indikator penilaian kinerja (KPI) tim.",
+      "blocks": [
+        {
+          "id": "b-17-1",
+          "tipe": "list",
+          "judul": "17.1 Dokumen yang Perlu Disiapkan",
+          "items": [
+            "Form penerimaan servis",
+            "Nota penjualan",
+            "Nota servis",
+            "Buku stok barang atau Google Sheets stok",
+            "Laporan kas harian",
+            "Daftar harga servis",
+            "Daftar harga produk",
+            "Checklist quality control",
+            "Log komplain pelanggan",
+            "Laporan stok opname",
+            "Data supplier",
+            "Data garansi produk"
+          ]
+        },
+        {
+          "id": "b-17-2",
+          "tipe": "table",
+          "judul": "17.2 KPI Sederhana",
+          "headers": [
+            "Bagian",
+            "Indikator",
+            "Target"
+          ],
+          "rows": [
+            [
+              "Admin",
+              "Respons WhatsApp",
+              "Maksimal 15 menit saat jam kerja"
+            ],
+            [
+              "Admin",
+              "Nota transaksi",
+              "100% transaksi tercatat"
+            ],
+            [
+              "Admin",
+              "Stok opname",
+              "Minimal 1 kali per minggu (Jumat)"
+            ],
+            [
+              "Teknisi",
+              "Diagnosa awal",
+              "Maksimal 1x24 jam untuk kasus ringan"
+            ],
+            [
+              "Teknisi",
+              "Servis selesai tepat waktu",
+              "Minimal 80% sesuai estimasi"
+            ],
+            [
+              "Toko",
+              "Komplain berulang",
+              "Maksimal 5% dari total servis"
+            ],
+            [
+              "Toko",
+              "Selisih stok",
+              "0 kasus tanpa penjelasan"
+            ],
+            [
+              "Toko",
+              "Laporan kas harian",
+              "Setiap hari kerja"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sop-18",
+      "nomor": "18",
+      "judul": "Alur Kerja Inti Toko",
+      "kategori": "Umum & Manajemen",
+      "icon": "🔄",
+      "ringkasan": "Prioritas penerapan awal: jalankan SOP penerimaan servis, konfirmasi biaya servis, quality control servis, nota transaksi, stok, dan laporan kas harian terlebih dahulu. Bagian tersebut paling menentukan ketertiban operasional toko.",
+      "blocks": [
+        {
+          "id": "b-18-1",
+          "tipe": "table",
+          "judul": "Ringkasan Alur Kerja Inti",
+          "headers": [
+            "Alur",
+            "Urutan Proses"
+          ],
+          "rows": [
+            [
+              "Penjualan",
+              "Pelanggan datang/chat → admin gali kebutuhan → rekomendasi produk → pelanggan setuju → admin buat nota → pembayaran → cek barang → barang diserahkan."
+            ],
+            [
+              "Servis",
+              "Pelanggan datang → admin catat data dan keluhan → teknisi diagnosa → admin konfirmasi biaya → pelanggan setuju → teknisi mengerjakan → QC → pelanggan dihubungi → barang diambil → pembayaran → garansi dijelaskan."
+            ],
+            [
+              "Stok",
+              "Barang datang → admin cek invoice → input stok → barang disimpan/display → barang terjual → stok dikurangi → stok opname berkala."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lampiran-1",
+      "nomor": "Lamp. 1",
+      "judul": "Lampiran 1: Form Penerimaan Servis",
+      "kategori": "Lampiran Form Kerja",
+      "icon": "📝",
+      "ringkasan": "Formulir standar pencatatan saat unit pertama kali diterima dari pelanggan.",
+      "blocks": [
+        {
+          "id": "b-lamp-1",
+          "tipe": "table",
+          "judul": "Form Penerimaan Servis",
+          "headers": [
+            "Field",
+            "Isi"
+          ],
+          "rows": [
+            [
+              "Nomor Servis",
+              "SV-YYYYMMDD-..."
+            ],
+            [
+              "Tanggal Masuk",
+              ""
+            ],
+            [
+              "Nama Pelanggan",
+              ""
+            ],
+            [
+              "Nomor WhatsApp",
+              ""
+            ],
+            [
+              "Jenis Perangkat",
+              "Laptop / PC / Printer / Lainnya"
+            ],
+            [
+              "Merek dan Tipe",
+              ""
+            ],
+            [
+              "Serial Number",
+              ""
+            ],
+            [
+              "Keluhan Pelanggan",
+              ""
+            ],
+            [
+              "Kelengkapan yang Dititipkan",
+              "Charger / Tas / Kabel / Adaptor / Lainnya: ............."
+            ],
+            [
+              "Kondisi Fisik Awal",
+              ""
+            ],
+            [
+              "Password Perangkat (bila diperlukan)",
+              ""
+            ],
+            [
+              "Estimasi Pengecekan",
+              ""
+            ],
+            [
+              "Catatan Admin",
+              ""
+            ],
+            [
+              "Tanda Tangan Pelanggan",
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lampiran-2",
+      "nomor": "Lamp. 2",
+      "judul": "Lampiran 2: Form Hasil Diagnosa Teknisi",
+      "kategori": "Lampiran Form Kerja",
+      "icon": "🩺",
+      "ringkasan": "Formulir pencatatan hasil pemeriksaan teknisi dan estimasi biaya/waktu.",
+      "blocks": [
+        {
+          "id": "b-lamp-2",
+          "tipe": "table",
+          "judul": "Form Hasil Diagnosa Teknisi",
+          "headers": [
+            "Field",
+            "Isi"
+          ],
+          "rows": [
+            [
+              "Nomor Servis",
+              ""
+            ],
+            [
+              "Nama Teknisi",
+              ""
+            ],
+            [
+              "Tanggal Diagnosa",
+              ""
+            ],
+            [
+              "Keluhan Awal",
+              ""
+            ],
+            [
+              "Hasil Pengecekan",
+              ""
+            ],
+            [
+              "Tindakan yang Disarankan",
+              ""
+            ],
+            [
+              "Estimasi Biaya",
+              "Rp ..........................."
+            ],
+            [
+              "Estimasi Waktu Pengerjaan",
+              ""
+            ],
+            [
+              "Status Konfirmasi Pelanggan",
+              "Setuju / Tidak Setuju / Menunggu Jawaban"
+            ],
+            [
+              "Catatan Teknisi",
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lampiran-3",
+      "nomor": "Lamp. 3",
+      "judul": "Lampiran 3: Form Quality Control Servis",
+      "kategori": "Lampiran Form Kerja",
+      "icon": "☑️",
+      "ringkasan": "Formulir pemeriksaan akhir sebelum perangkat diserahkan kembali ke pelanggan.",
+      "blocks": [
+        {
+          "id": "b-lamp-3",
+          "tipe": "checklist",
+          "judul": "Checklist Form QC Servis",
+          "items": [
+            {
+              "teks": "Keluhan utama sudah selesai",
+              "checked": false
+            },
+            {
+              "teks": "Perangkat menyala normal",
+              "checked": false
+            },
+            {
+              "teks": "Fungsi utama sudah diuji",
+              "checked": false
+            },
+            {
+              "teks": "Tidak ada kerusakan baru",
+              "checked": false
+            },
+            {
+              "teks": "Kelengkapan sesuai catatan awal",
+              "checked": false
+            },
+            {
+              "teks": "Unit siap diserahkan kepada pelanggan",
+              "checked": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lampiran-4",
+      "nomor": "Lamp. 4",
+      "judul": "Lampiran 4: Format Laporan Kas Harian",
+      "kategori": "Lampiran Form Kerja",
+      "icon": "💵",
+      "ringkasan": "Tabel rekapitulasi kas masuk dan keluar setiap hari kerja.",
+      "blocks": [
+        {
+          "id": "b-lamp-4",
+          "tipe": "table",
+          "judul": "Format Laporan Kas Harian",
+          "headers": [
+            "Tanggal",
+            "Penjualan",
+            "Servis",
+            "Pengeluaran",
+            "Tunai",
+            "Transfer/QRIS",
+            "Saldo Akhir",
+            "Admin"
+          ],
+          "rows": [
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lampiran-5",
+      "nomor": "Lamp. 5",
+      "judul": "Lampiran 5: Format Stok Opname",
+      "kategori": "Lampiran Form Kerja",
+      "icon": "📦",
+      "ringkasan": "Tabel pemeriksaan kesesuaian stok sistem dengan stok fisik di toko.",
+      "blocks": [
+        {
+          "id": "b-lamp-5",
+          "tipe": "table",
+          "judul": "Format Stok Opname",
+          "headers": [
+            "Tanggal",
+            "Kode Barang",
+            "Nama Barang",
+            "Stok Sistem",
+            "Stok Fisik",
+            "Selisih",
+            "Keterangan"
+          ],
+          "rows": [
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

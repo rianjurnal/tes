@@ -1,0 +1,2543 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>SOP Toko Komputer, Aksesori, dan Servis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #475569;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      .print-full {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .sop-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        margin-bottom: 1rem !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200 pb-20 lg:pb-8">
+
+  <!-- TOP NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+      <!-- Left: Hamburger (Mobile) + Brand -->
+      <div class="flex items-center gap-2.5 min-w-0">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none" aria-label="Buka Daftar Isi">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <div class="bg-brand-600 text-white p-2 rounded-xl shadow-sm shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="truncate">
+          <div class="flex items-center gap-2">
+            <h1 id="headerStoreName" class="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate">[Nama Toko]</h1>
+            <span id="serverStatusBadge" class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersimpan
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 truncate">Portal SOP Toko Komputer, Aksesori & Servis</p>
+        </div>
+      </div>
+
+      <!-- Center: Search Bar (Desktop/Tablet) -->
+      <div class="hidden md:flex flex-1 max-w-md mx-4">
+        <div class="relative w-full">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </span>
+          <input
+            id="desktopSearchInput"
+            type="text"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari SOP, langkah, checklist, atau template WA..."
+            class="w-full pl-9 pr-8 py-1.5 text-sm rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/60 focus:bg-white dark:focus:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"
+          />
+          <button id="clearSearchDesktop" onclick="handleSearch('')" class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Action Buttons -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- Toggle Edit Mode -->
+        <button
+          id="editModeBtn"
+          onclick="toggleEditMode()"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-900/30 dark:text-amber-200 dark:border-amber-700"
+          title="Aktifkan untuk mengedit atau menambah langkah SOP"
+        >
+          <span id="editModeIcon">✏️</span>
+          <span id="editModeText">Mode Edit: OFF</span>
+        </button>
+
+        <!-- Add SOP Button -->
+        <button
+          onclick="openAddSectionModal()"
+          class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition"
+        >
+          <span>＋</span>
+          <span>Tambah SOP</span>
+        </button>
+
+        <!-- Print / PDF -->
+        <button
+          onclick="window.print()"
+          class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
+          title="Cetak atau Simpan PDF"
+        >
+          🖨️
+        </button>
+
+        <!-- Admin Panel Link -->
+        <a
+          href="admin.html"
+          class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-white hover:bg-black dark:bg-slate-700 dark:hover:bg-slate-600 flex items-center gap-1 transition"
+          title="Buka Halaman Admin"
+        >
+          <span>🔐</span>
+          <span class="hidden sm:inline">Admin</span>
+        </a>
+
+        <!-- Dark Mode Toggle -->
+        <button
+          onclick="toggleDarkMode()"
+          class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
+          title="Ubah Tema Terang / Gelap"
+        >
+          <span id="themeIcon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Search Bar -->
+    <div class="md:hidden px-3 pb-2.5">
+      <div class="relative w-full">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </span>
+        <input
+          id="mobileSearchInput"
+          type="text"
+          oninput="handleSearch(this.value)"
+          placeholder="Cari SOP, langkah, atau template chat..."
+          class="w-full pl-9 pr-8 py-2 text-sm rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/60 focus:bg-white dark:focus:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"
+        />
+        <button id="clearSearchMobile" onclick="handleSearch('')" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+          ✕
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- EDIT MODE BANNER -->
+  <div id="editModeBanner" class="hidden bg-amber-500 text-slate-950 px-4 py-2 text-xs sm:text-sm font-medium shadow-inner no-print">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🛠️</span>
+        <span><strong>Mode Edit Aktif:</strong> Anda dapat mengubah teks, menambah langkah kerja, mengurutkan item, menambah tabel/checklist, atau membuat Bab SOP baru. Semua perubahan otomatis tersimpan.</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openAddSectionModal()" class="px-2.5 py-1 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800">
+          + Bab SOP Baru
+        </button>
+        <button onclick="openMetadataModal()" class="px-2.5 py-1 rounded-lg bg-white/90 text-slate-900 text-xs font-semibold hover:bg-white">
+          ⚙️ Edit Info Toko
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 flex flex-col lg:flex-row gap-6 print-full">
+
+    <!-- SIDEBAR OVERLAY (MOBILE) -->
+    <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden lg:hidden no-print"></div>
+
+    <!-- LEFT SIDEBAR: DAFTAR ISI & FILTER -->
+    <aside
+      id="sidebarDrawer"
+      class="fixed lg:static inset-y-0 left-0 z-50 w-72 sm:w-80 lg:w-72 shrink-0 bg-white lg:bg-transparent dark:bg-slate-800 lg:dark:bg-transparent border-r lg:border-r-0 border-slate-200 dark:border-slate-700 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out flex flex-col no-print"
+    >
+      <div class="lg:sticky lg:top-20 bg-white dark:bg-slate-800 rounded-none lg:rounded-2xl lg:border border-slate-200 dark:border-slate-700 lg:shadow-xs flex flex-col h-full lg:max-h-[calc(100vh-6rem)] overflow-hidden">
+        <!-- Mobile Drawer Header -->
+        <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between lg:hidden">
+          <span class="font-bold text-slate-800 dark:text-white">Daftar Isi & Navigasi</span>
+          <button onclick="toggleSidebar()" class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">✕</button>
+        </div>
+
+        <!-- Checklist Progress Widget -->
+        <div class="p-3.5 border-b border-slate-100 dark:border-slate-700/70 bg-slate-50/70 dark:bg-slate-800/50">
+          <div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+            <span class="text-slate-600 dark:text-slate-300">✅ Progres Checklist</span>
+            <span id="globalChecklistText" class="text-brand-600 dark:text-brand-400">0/0 Selesai</span>
+          </div>
+          <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div id="globalChecklistBar" class="h-full bg-brand-600 transition-all duration-300" style="width: 0%"></div>
+          </div>
+          <div class="mt-2 flex items-center justify-between">
+            <button onclick="resetAllChecklists()" class="text-[11px] text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 font-medium">
+              ↺ Reset Semua Centang
+            </button>
+            <button onclick="expandCollapseAll()" id="expandCollapseBtn" class="text-[11px] text-brand-600 dark:text-brand-400 hover:underline font-medium">
+              Ringkas Semua
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="p-3 border-b border-slate-100 dark:border-slate-700/70">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Filter Kategori</p>
+          <div id="categoryFilterContainer" class="flex flex-wrap gap-1.5">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Table of Contents List -->
+        <div class="px-3 pt-2.5 pb-1">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Daftar Bab SOP</p>
+        </div>
+        <nav id="tocList" class="flex-1 overflow-y-auto px-2 pb-3 space-y-0.5 text-sm">
+          <!-- Populated by JS -->
+        </nav>
+
+        <!-- Sidebar Footer: Backup / Export / Info -->
+        <div class="p-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 space-y-1.5">
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="exportDataJSON()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 hover:bg-slate-100 text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1">
+              ⬇️ Backup JSON
+            </button>
+            <label class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 hover:bg-slate-100 text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1 cursor-pointer">
+              ⬆️ Muat JSON
+              <input type="file" accept=".json" onchange="importDataJSON(event)" class="hidden" />
+            </label>
+          </div>
+          <button onclick="resetToDefaultSOP()" class="w-full py-1 text-[11px] text-slate-400 hover:text-rose-500 transition">
+            Kembalikan ke Data Awal (Default)
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 min-w-0 space-y-5">
+
+      <!-- DOCUMENT HEADER & CONTROL CARD -->
+      <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs overflow-hidden sop-card">
+        <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-indigo-700 px-5 py-6 text-white">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div class="space-y-1">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/15 backdrop-blur-xs">
+                <span>📘 DOKUMEN RESMI OPERASIONAL</span>
+                <span>•</span>
+                <span id="metaVersiBadge">Versi 1.0</span>
+              </div>
+              <h2 id="metaJudul" class="text-xl sm:text-2xl font-extrabold tracking-tight">STANDAR OPERASIONAL PROSEDUR</h2>
+              <p id="metaSubjudul" class="text-sm sm:text-base font-semibold text-blue-100">TOKO KOMPUTER, AKSESORI, DAN SERVIS — <span id="metaNamaToko" class="underline decoration-amber-300 decoration-2 underline-offset-4">[Nama Toko]</span></p>
+            </div>
+            <button
+              onclick="openMetadataModal()"
+              class="no-print px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold backdrop-blur-xs border border-white/20 transition flex items-center gap-1.5"
+            >
+              <span>⚙️</span>
+              <span>Edit Nama Toko & Info Dokumen</span>
+            </button>
+          </div>
+          <p id="metaDeskripsi" class="mt-3 text-xs sm:text-sm text-blue-50/90 leading-relaxed max-w-4xl"></p>
+        </div>
+
+        <!-- Lembar Kendali Dokumen Collapsible / Grid -->
+        <div class="p-4 sm:p-5 bg-white dark:bg-slate-800">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Lembar Kendali Dokumen</h3>
+            <button onclick="toggleDocControl()" class="no-print text-xs text-brand-600 dark:text-brand-400 hover:underline font-medium" id="toggleDocControlBtn">
+              Lihat Detail Pengesahan ▾
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
+              <span class="text-slate-400 dark:text-slate-400 block">Unit Kerja / Toko</span>
+              <strong id="ctrlNamaToko" class="text-slate-800 dark:text-slate-100 font-semibold mt-0.5 block truncate">[Nama Toko]</strong>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
+              <span class="text-slate-400 dark:text-slate-400 block">Tanggal Berlaku</span>
+              <strong id="ctrlTanggal" class="text-slate-800 dark:text-slate-100 font-semibold mt-0.5 block truncate">-</strong>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
+              <span class="text-slate-400 dark:text-slate-400 block">Disetujui Oleh</span>
+              <strong id="ctrlDisetujui" class="text-slate-800 dark:text-slate-100 font-semibold mt-0.5 block truncate">-</strong>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
+              <span class="text-slate-400 dark:text-slate-400 block">Berlaku Untuk</span>
+              <strong id="ctrlBerlaku" class="text-slate-800 dark:text-slate-100 font-semibold mt-0.5 block truncate">-</strong>
+            </div>
+          </div>
+
+          <!-- Detail Lembar Kendali (Collapsible) -->
+          <div id="docControlDetails" class="hidden mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 text-xs space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <span class="text-slate-400">Disusun Oleh:</span>
+                <span id="ctrlDisusun" class="ml-1 font-medium text-slate-700 dark:text-slate-200"></span>
+              </div>
+              <div>
+                <span class="text-slate-400">Frekuensi Evaluasi:</span>
+                <span id="ctrlEvaluasi" class="ml-1 font-medium text-slate-700 dark:text-slate-200"></span>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+                <thead class="bg-slate-50 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">
+                  <tr>
+                    <th class="p-2 border border-slate-200 dark:border-slate-700">Jabatan</th>
+                    <th class="p-2 border border-slate-200 dark:border-slate-700">Nama</th>
+                    <th class="p-2 border border-slate-200 dark:border-slate-700">Tanda Tangan</th>
+                    <th class="p-2 border border-slate-200 dark:border-slate-700">Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="p-2 border border-slate-200 dark:border-slate-700 font-medium">Disusun oleh</td>
+                    <td id="tblDisusun" class="p-2 border border-slate-200 dark:border-slate-700"></td>
+                    <td class="p-2 border border-slate-200 dark:border-slate-700 text-slate-400 italic">(ttd)</td>
+                    <td id="tblTanggal1" class="p-2 border border-slate-200 dark:border-slate-700"></td>
+                  </tr>
+                  <tr>
+                    <td class="p-2 border border-slate-200 dark:border-slate-700 font-medium">Diperiksa oleh</td>
+                    <td id="tblDiperiksa" class="p-2 border border-slate-200 dark:border-slate-700"></td>
+                    <td class="p-2 border border-slate-200 dark:border-slate-700 text-slate-400 italic">(ttd)</td>
+                    <td id="tblTanggal2" class="p-2 border border-slate-200 dark:border-slate-700"></td>
+                  </tr>
+                  <tr>
+                    <td class="p-2 border border-slate-200 dark:border-slate-700 font-medium">Disetujui oleh</td>
+                    <td id="tblDisetujui" class="p-2 border border-slate-200 dark:border-slate-700"></td>
+                    <td class="p-2 border border-slate-200 dark:border-slate-700 text-slate-400 italic">(ttd)</td>
+                    <td id="tblTanggal3" class="p-2 border border-slate-200 dark:border-slate-700"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOBILE CATEGORY QUICK PILLS -->
+      <div id="mobileCategoryPills" class="flex lg:hidden items-center gap-1.5 overflow-x-auto pb-1 no-print">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- SOP SECTIONS LIST -->
+      <div id="sopSectionsContainer" class="space-y-5">
+        <!-- Dynamically rendered by JS -->
+      </div>
+
+      <!-- FOOTER PENGESAHAN -->
+      <footer class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 text-center space-y-2 sop-card">
+        <p id="footerPengesahan" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium"></p>
+        <div class="pt-2 no-print">
+          <button
+            onclick="openAddSectionModal()"
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition"
+          >
+            <span>＋</span>
+            <span>Tambah Bab SOP / Lampiran Baru</span>
+          </button>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-t border-slate-200 dark:border-slate-700 px-2 py-1.5 flex items-center justify-around text-xs no-print">
+    <button onclick="toggleSidebar()" class="flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg text-slate-600 dark:text-slate-300">
+      <span class="text-base">📑</span>
+      <span class="text-[11px] font-medium">Daftar Isi</span>
+    </button>
+    <button onclick="toggleEditMode()" class="flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg text-slate-600 dark:text-slate-300">
+      <span class="text-base" id="mobileEditIcon">✏️</span>
+      <span class="text-[11px] font-medium" id="mobileEditLabel">Mode Edit</span>
+    </button>
+    <button onclick="openAddSectionModal()" class="flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg text-brand-600 dark:text-brand-400 font-semibold">
+      <span class="text-base">➕</span>
+      <span class="text-[11px]">Bab Baru</span>
+    </button>
+    <a href="admin.html" class="flex flex-col items-center gap-0.5 py-1 px-3 rounded-lg text-slate-600 dark:text-slate-300">
+      <span class="text-base">🔐</span>
+      <span class="text-[11px] font-medium">Admin</span>
+    </a>
+  </nav>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-16 lg:bottom-6 right-4 z-50 hidden transform transition-all duration-200">
+    <div class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-xl shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2">
+      <span id="toastIcon">✅</span>
+      <span id="toastText">Perubahan disimpan</span>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT METADATA TOKO & DOKUMEN -->
+  <div id="metadataModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">⚙️ Edit Identitas Toko & Dokumen SOP</h3>
+        <button onclick="closeMetadataModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form onsubmit="saveMetadataForm(event)" class="p-5 space-y-3.5 max-h-[80vh] overflow-y-auto text-sm">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Nama Toko (Otomatis diterapkan ke seluruh template chat WA)</label>
+          <input id="formNamaToko" type="text" required class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" placeholder="Contoh: Berkah Komputer & Servis" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Versi Dokumen</label>
+            <input id="formVersi" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Tanggal Berlaku</label>
+            <input id="formTanggal" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Disusun Oleh</label>
+            <input id="formDisusun" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Diperiksa Oleh</label>
+            <input id="formDiperiksa" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Disetujui Oleh</label>
+            <input id="formDisetujui" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Berlaku Untuk</label>
+          <input id="formBerlaku" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Deskripsi Singkat Dokumen</label>
+          <textarea id="formDeskripsi" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"></textarea>
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeMetadataModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-xs font-semibold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold">Simpan Informasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH BAB SOP BARU -->
+  <div id="addSectionModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">➕ Tambah Bab SOP / Lampiran Baru</h3>
+        <button onclick="closeAddSectionModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form onsubmit="submitNewSection(event)" class="p-5 space-y-3.5 text-sm">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Nomor Bab</label>
+            <input id="newSecNomor" type="text" required placeholder="Misal: 19" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Ikon</label>
+            <input id="newSecIcon" type="text" value="📌" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Kategori</label>
+            <select id="newSecKategori" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700">
+              <option value="Operasional Harian">Operasional Harian</option>
+              <option value="Layanan Servis">Layanan Servis</option>
+              <option value="Penjualan & Pelanggan">Penjualan & Pelanggan</option>
+              <option value="Stok & Keuangan">Stok & Keuangan</option>
+              <option value="Umum & Manajemen">Umum & Manajemen</option>
+              <option value="Lampiran Form Kerja">Lampiran Form Kerja</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Judul SOP Baru</label>
+          <input id="newSecJudul" type="text" required placeholder="Contoh: SOP Klaim Garansi ke Distributor" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Tujuan / Ringkasan Singkat</label>
+          <textarea id="newSecRingkasan" rows="2" placeholder="Jelaskan tujuan singkat dari SOP ini..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Langkah Kerja Awal (Pisahkan dengan baris baru / Enter)</label>
+          <textarea id="newSecSteps" rows="4" placeholder="Langkah 1&#10;Langkah 2&#10;Langkah 3" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"></textarea>
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeAddSectionModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-xs font-semibold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold">Tambahkan SOP</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH SUB-BLOK DI DALAM BAB SOP -->
+  <div id="addBlockModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 no-print">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">➕ Tambah Bagian / Langkah Baru</h3>
+        <button onclick="closeAddBlockModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form onsubmit="submitNewBlock(event)" class="p-5 space-y-3.5 text-sm">
+        <input type="hidden" id="blockTargetSectionId" />
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Judul Sub-Bagian</label>
+          <input id="newBlockJudul" type="text" required placeholder="Contoh: Langkah Pengecekan / Checklist Tambahan" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Jenis Format</label>
+          <select id="newBlockTipe" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700">
+            <option value="steps">🔢 Langkah Kerja Berurutan (1, 2, 3...)</option>
+            <option value="checklist">✅ Checklist Interaktif (Bisa Dicentang)</option>
+            <option value="list">• Daftar Poin (Bullet Points)</option>
+            <option value="alert">⚠️ Kotak Larangan / Peringatan Penting</option>
+            <option value="chat_templates">💬 Template Chat WhatsApp (Tombol Copy)</option>
+            <option value="table">📊 Tabel Data (Baris & Kolom)</option>
+          </select>
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeAddBlockModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-xs font-semibold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold">Tambah Bagian</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- INITIAL FALLBACK DATA & APPLICATION SCRIPT -->
+  <script>
+    // Data awal SOP lengkap (18 Bab SOP + 5 Lampiran)
+    const DEFAULT_SOP_DATA = {
+      "metadata": {
+        "judul": "STANDAR OPERASIONAL PROSEDUR",
+        "subjudul": "TOKO KOMPUTER, AKSESORI, DAN SERVIS",
+        "nama_toko": "[Nama Toko]",
+        "deskripsi": "Disusun untuk mengatur layanan penjualan komputer, aksesori, penerimaan servis, pengerjaan teknis, pengelolaan stok, transaksi keuangan, dan pelayanan pelanggan.",
+        "versi": "1.0",
+        "tanggal_berlaku": "19 Oktober 2026",
+        "disusun_oleh": "Tim Operasional",
+        "diperiksa_oleh": "Manajer Operasional",
+        "disetujui_oleh": "Pemilik / Penanggung Jawab Toko",
+        "berlaku_untuk": "Admin, Teknisi Utama, Teknisi Pendukung",
+        "frekuensi_evaluasi": "Minimal 1 kali setiap 3 bulan atau saat ada perubahan proses kerja",
+        "catatan_pengesahan": "Dokumen SOP ini berlaku sejak tanggal pengesahan oleh Pemilik / Penanggung Jawab Toko. Setiap anggota tim wajib membaca, memahami, dan menandatangani dokumen ini sebagai bukti persetujuan."
+      },
+      "sections": [
+        {
+          "id": "sop-1",
+          "nomor": "1",
+          "judul": "Tujuan dan Ruang Lingkup SOP",
+          "kategori": "Umum & Manajemen",
+          "icon": "🎯",
+          "ringkasan": "SOP ini dibuat untuk memastikan operasional toko komputer, aksesori, dan servis berjalan tertib, tercatat, profesional, dan mudah diawasi. SOP ini juga berfungsi untuk mengurangi risiko salah paham dengan pelanggan, kehilangan stok, ketidaksesuaian kas, keterlambatan servis, serta komplain garansi.",
+          "blocks": [
+            {
+              "id": "b-1-1",
+              "tipe": "list",
+              "judul": "1.1 Tujuan",
+              "items": [
+                "Menetapkan alur kerja standar untuk penjualan, servis, stok, keuangan, dan pelayanan pelanggan.",
+                "Memastikan setiap transaksi penjualan dan servis memiliki bukti pencatatan yang jelas.",
+                "Menjaga kualitas layanan teknis melalui proses diagnosa, konfirmasi biaya, pengerjaan, dan quality control.",
+                "Membantu pemilik toko mengawasi kinerja admin dan teknisi secara objektif.",
+                "Meningkatkan kepercayaan pelanggan melalui pelayanan yang transparan dan konsisten."
+              ]
+            },
+            {
+              "id": "b-1-2",
+              "tipe": "list",
+              "judul": "1.2 Ruang Lingkup",
+              "items": [
+                "Penjualan komputer, laptop, printer, perangkat jaringan, dan aksesori.",
+                "Penerimaan dan pencatatan barang servis.",
+                "Diagnosa, pengerjaan, quality control, dan garansi servis.",
+                "Pengelolaan stok barang masuk, barang keluar, dan stok opname.",
+                "Pencatatan kas harian, pembayaran, pengeluaran, dan laporan harian.",
+                "Layanan pelanggan melalui toko fisik, WhatsApp, telepon, dan media online lainnya.",
+                "Penanganan komplain pelanggan."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-2",
+          "nomor": "2",
+          "judul": "Struktur Tim dan Pembagian Tugas",
+          "kategori": "Umum & Manajemen",
+          "icon": "👥",
+          "ringkasan": "Prinsip kerja utama: admin mengatur komunikasi dan pencatatan, teknisi mengatur aspek teknis, sedangkan pemilik toko mengatur keputusan bisnis dan kebijakan harga.",
+          "blocks": [
+            {
+              "id": "b-2-1",
+              "tipe": "table",
+              "judul": "Pembagian Tugas Tim",
+              "headers": ["Posisi", "Tanggung Jawab Utama"],
+              "rows": [
+                [
+                  "Pemilik / Penanggung Jawab Toko",
+                  "Mengambil keputusan harga, pembelian stok, kerja sama supplier, evaluasi keuangan, strategi promosi, persetujuan diskon, dan pengawasan operasional toko."
+                ],
+                [
+                  "Admin Toko",
+                  "Melayani pelanggan, menjawab WhatsApp, membuat nota, mencatat servis, mengatur antrean pekerjaan teknisi, mengelola stok, mencatat kas harian, dan membuat laporan harian."
+                ],
+                [
+                  "Teknisi Utama",
+                  "Melakukan diagnosa kerusakan, menentukan estimasi biaya teknis, mengerjakan servis utama, melakukan quality control, dan memberi arahan kepada teknisi pendukung."
+                ],
+                [
+                  "Teknisi Pendukung",
+                  "Membantu pengecekan awal, instalasi software, cleaning, bongkar-pasang ringan, packing, dan pekerjaan teknis lain berdasarkan arahan teknisi utama."
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-3",
+          "nomor": "3",
+          "judul": "SOP Pembukaan Toko",
+          "kategori": "Operasional Harian",
+          "icon": "🌅",
+          "ringkasan": "3.1 Tujuan: Memastikan toko siap melayani pelanggan sejak jam operasional dimulai.",
+          "blocks": [
+            {
+              "id": "b-3-1",
+              "tipe": "steps",
+              "judul": "3.2 Langkah Kerja",
+              "items": [
+                "Admin datang minimal 5–30 menit sebelum toko dibuka.",
+                "Admin membuka toko dan menyalakan lampu, komputer kasir, printer, internet, serta perangkat display.",
+                "Admin mengecek kebersihan area toko, meja display, etalase, dan ruang servis.",
+                "Admin mengecek uang kas awal dan memastikan nilainya sesuai dengan laporan penutupan hari sebelumnya.",
+                "Admin mengecek daftar servis yang belum selesai dan barang yang siap diambil pelanggan.",
+                "Admin menyampaikan prioritas pekerjaan servis kepada teknisi utama.",
+                "Teknisi mengecek meja kerja, alat servis, sparepart, dan perangkat pelanggan yang sedang dikerjakan.",
+                "Toko dinyatakan siap melayani pelanggan."
+              ]
+            },
+            {
+              "id": "b-3-2",
+              "tipe": "checklist",
+              "judul": "3.3 Checklist Pembukaan Toko",
+              "items": [
+                { "teks": "Lampu, komputer kasir, printer, dan internet menyala", "checked": false },
+                { "teks": "Etalase dan area display bersih", "checked": false },
+                { "teks": "Kas awal sesuai laporan sebelumnya", "checked": false },
+                { "teks": "Daftar servis hari ini sudah diperiksa", "checked": false },
+                { "teks": "Meja teknisi dan alat kerja siap digunakan", "checked": false }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-4",
+          "nomor": "4",
+          "judul": "SOP Penjualan Komputer dan Aksesori",
+          "kategori": "Penjualan & Pelanggan",
+          "icon": "🛒",
+          "ringkasan": "4.1 Tujuan: Memberikan pelayanan penjualan yang cepat, jelas, dan tidak menimbulkan salah paham dengan pelanggan.",
+          "blocks": [
+            {
+              "id": "b-4-1",
+              "tipe": "steps",
+              "judul": "4.2 Alur Penjualan",
+              "items": [
+                "Admin menyambut pelanggan dan menanyakan kebutuhan utama.",
+                "Admin menggali kebutuhan pelanggan: penggunaan, budget, preferensi merek, dan kebutuhan tambahan.",
+                "Admin memberikan maksimal 2–3 rekomendasi produk agar pelanggan tidak bingung.",
+                "Admin menjelaskan harga, kelengkapan, garansi, ketentuan retur, dan biaya tambahan bila ada.",
+                "Admin membuat nota penjualan setelah pelanggan setuju membeli.",
+                "Admin atau teknisi mengecek barang sebelum diserahkan kepada pelanggan.",
+                "Pelanggan melakukan pembayaran melalui tunai, transfer, QRIS, atau metode lain yang tersedia.",
+                "Barang diserahkan setelah pembayaran diterima dan nota diberikan kepada pelanggan."
+              ]
+            },
+            {
+              "id": "b-4-2",
+              "tipe": "list",
+              "judul": "4.3 Data Wajib pada Nota Penjualan",
+              "items": [
+                "Tanggal transaksi.",
+                "Nama pelanggan dan nomor HP.",
+                "Nama barang, merek, tipe, dan serial number jika ada.",
+                "Harga barang dan diskon jika ada.",
+                "Metode pembayaran.",
+                "Keterangan garansi.",
+                "Nama admin yang melayani."
+              ]
+            },
+            {
+              "id": "b-4-3",
+              "tipe": "chat_templates",
+              "judul": "4.4 Kalimat Layanan yang Disarankan",
+              "items": [
+                {
+                  "label": "Pelanggan baru datang",
+                  "teks": "Selamat datang, Kak. Sedang cari laptop, komputer, aksesori, atau ingin servis?"
+                },
+                {
+                  "label": "Menggali kebutuhan",
+                  "teks": "Dipakai untuk kuliah, kerja kantor, desain, editing, gaming, atau kebutuhan kasir?"
+                },
+                {
+                  "label": "Menanyakan budget",
+                  "teks": "Budget yang disiapkan sekitar berapa, Kak? Supaya kami bisa rekomendasikan yang paling sesuai."
+                },
+                {
+                  "label": "Cek barang sebelum diserahkan",
+                  "teks": "Sebelum dibawa pulang, kita cek dulu unitnya ya, Kak, supaya sama-sama jelas kondisinya."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-5",
+          "nomor": "5",
+          "judul": "SOP Penerimaan Servis",
+          "kategori": "Layanan Servis",
+          "icon": "🛠️",
+          "ringkasan": "5.1 Tujuan: Menghindari salah paham terkait kondisi barang, biaya servis, estimasi waktu, kelengkapan barang, dan tanggung jawab toko.",
+          "blocks": [
+            {
+              "id": "b-5-1",
+              "tipe": "steps",
+              "judul": "5.2 Alur Penerimaan Servis",
+              "items": [
+                "Admin menerima pelanggan dan menanyakan keluhan utama.",
+                "Admin mencatat data pelanggan dan data perangkat.",
+                "Admin atau teknisi mencatat kondisi fisik awal perangkat.",
+                "Admin mencatat kelengkapan yang dititipkan: charger, tas, mouse, kabel, atau adaptor.",
+                "Admin memberi nomor servis dan membuat nota servis.",
+                "Admin menjelaskan estimasi waktu pengecekan dan ketentuan biaya pengecekan jika ada.",
+                "Barang diberi label nomor servis dan disimpan di area servis.",
+                "Teknisi melakukan pengecekan sesuai antrean pekerjaan."
+              ]
+            },
+            {
+              "id": "b-5-2",
+              "tipe": "table",
+              "judul": "5.3 Data Wajib Penerimaan Servis",
+              "headers": ["Kategori Data", "Isi yang Harus Dicatat"],
+              "rows": [
+                ["Data Pelanggan", "Nama, nomor WhatsApp, alamat singkat bila diperlukan."],
+                ["Data Perangkat", "Jenis perangkat, merek, tipe, serial number bila ada."],
+                ["Keluhan", "Keluhan utama, waktu mulai bermasalah, riwayat jatuh/kena air bila ada."],
+                ["Kelengkapan", "Charger, baterai, tas, kabel, adaptor, mouse, atau aksesori lain."],
+                ["Kondisi Fisik Awal", "Lecet, retak, baut kurang, engsel longgar, layar bergaris, keyboard rusak, baterai kembung, segel rusak."],
+                ["Akses Perangkat", "Password perangkat hanya dicatat bila diperlukan dan disimpan secara terbatas."]
+              ]
+            },
+            {
+              "id": "b-5-3",
+              "tipe": "alert",
+              "judul": "Aturan Wajib Nomor Servis",
+              "items": [
+                "Setiap barang servis harus memiliki nomor servis. Jangan menerima barang servis hanya berdasarkan ingatan atau chat tanpa pencatatan resmi."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-6",
+          "nomor": "6",
+          "judul": "SOP Diagnosa Teknisi",
+          "kategori": "Layanan Servis",
+          "icon": "🔍",
+          "ringkasan": "6.1 Tujuan: Memastikan teknisi bekerja berdasarkan urutan pengecekan yang rapi dan tercatat, bukan berdasarkan dugaan tanpa bukti pemeriksaan.",
+          "blocks": [
+            {
+              "id": "b-6-1",
+              "tipe": "steps",
+              "judul": "6.2 Langkah Kerja Teknisi",
+              "items": [
+                "Teknisi mengambil unit berdasarkan nomor nota servis.",
+                "Teknisi membaca keluhan pelanggan dan catatan admin.",
+                "Teknisi memeriksa kondisi fisik perangkat sebelum membuka atau menguji perangkat.",
+                "Teknisi melakukan pengecekan awal sesuai jenis keluhan.",
+                "Teknisi mengidentifikasi kemungkinan penyebab kerusakan.",
+                "Teknisi mencatat hasil diagnosa dan rekomendasi tindakan.",
+                "Teknisi menyampaikan estimasi biaya dan waktu pengerjaan kepada admin.",
+                "Admin menghubungi pelanggan untuk meminta persetujuan."
+              ]
+            },
+            {
+              "id": "b-6-2",
+              "tipe": "table",
+              "judul": "6.3 Format Ringkas Hasil Diagnosa",
+              "headers": ["No. Servis", "Perangkat", "Keluhan", "Hasil Diagnosa", "Est. Biaya/Waktu"],
+              "rows": [
+                ["SV-20260604-001", "Laptop Asus", "Mati total", "Indikasi kendala IC power", "Rp450.000 / 2–3 hari kerja"],
+                ["SV-20260604-002", "Printer Epson", "Tidak keluar tinta", "Head buntu, perlu cleaning mendalam", "Rp150.000 / 1 hari kerja"]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-7",
+          "nomor": "7",
+          "judul": "SOP Konfirmasi Biaya Servis",
+          "kategori": "Layanan Servis",
+          "icon": "💬",
+          "ringkasan": "7.1 Prinsip Utama: Tidak ada pekerjaan servis berbayar yang boleh dilakukan sebelum pelanggan menyetujui biaya, estimasi waktu, dan tindakan servis.",
+          "blocks": [
+            {
+              "id": "b-7-1",
+              "tipe": "steps",
+              "judul": "7.2 Alur Konfirmasi",
+              "items": [
+                "Teknisi menyerahkan hasil diagnosa kepada admin.",
+                "Admin menghubungi pelanggan melalui WhatsApp atau telepon.",
+                "Admin menjelaskan kerusakan, tindakan yang disarankan, estimasi biaya, dan estimasi waktu.",
+                "Pelanggan memilih: setuju atau tidak setuju.",
+                "Admin mencatat keputusan pelanggan di buku / sistem servis.",
+                "Teknisi mulai mengerjakan servis hanya setelah ada persetujuan pelanggan."
+              ]
+            },
+            {
+              "id": "b-7-2",
+              "tipe": "chat_templates",
+              "judul": "7.3 Template WhatsApp Konfirmasi Biaya",
+              "items": [
+                {
+                  "label": "Menyampaikan hasil diagnosa",
+                  "teks": "Halo Kak, kami dari [Nama Toko]. Untuk [jenis perangkat/merek] atas nama Kak [nama], hasil pengecekan teknisi menunjukkan kendala pada bagian [hasil diagnosa]. Estimasi biaya servis Rp[biaya] dengan waktu pengerjaan [estimasi waktu]. Apakah servisnya ingin dilanjutkan?"
+                },
+                {
+                  "label": "Pelanggan setuju",
+                  "teks": "Baik Kak, kami lanjutkan proses servisnya. Nanti kami kabari kembali setelah selesai."
+                },
+                {
+                  "label": "Pelanggan tidak setuju",
+                  "teks": "Baik Kak, servis tidak kami lanjutkan. Unit bisa diambil kembali di toko. Untuk biaya pengecekan sebesar Rp[biaya pengecekan] sesuai ketentuan awal."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-8",
+          "nomor": "8",
+          "judul": "SOP Pengerjaan Servis",
+          "kategori": "Layanan Servis",
+          "icon": "⚙️",
+          "ringkasan": "8.1 Tujuan: Memastikan pekerjaan servis dilakukan secara tertib, aman, dan dapat dipantau progresnya.",
+          "blocks": [
+            {
+              "id": "b-8-1",
+              "tipe": "steps",
+              "judul": "8.2 Langkah Kerja",
+              "items": [
+                "Teknisi mengambil unit yang sudah disetujui pelanggan.",
+                "Teknisi menyiapkan alat, sparepart, dan area kerja.",
+                "Teknisi mengerjakan servis sesuai hasil diagnosa yang sudah disetujui.",
+                "Jika ditemukan kerusakan tambahan, teknisi wajib berhenti dan melapor kepada admin.",
+                "Admin menghubungi pelanggan untuk konfirmasi biaya tambahan.",
+                "Teknisi melanjutkan pekerjaan hanya setelah pelanggan menyetujui biaya tambahan.",
+                "Setelah pekerjaan selesai, teknisi melakukan pengujian awal.",
+                "Unit masuk ke proses quality control."
+              ]
+            },
+            {
+              "id": "b-8-2",
+              "tipe": "alert",
+              "judul": "8.3 Larangan untuk Teknisi",
+              "items": [
+                "Mengganti sparepart tanpa persetujuan pelanggan.",
+                "Menghapus data pelanggan tanpa izin tertulis atau konfirmasi jelas.",
+                "Menggunakan perangkat pelanggan untuk keperluan pribadi.",
+                "Membuka file pribadi pelanggan yang tidak berkaitan dengan pekerjaan servis.",
+                "Menjanjikan hasil yang belum pasti.",
+                "Menentukan harga langsung kepada pelanggan tanpa sepengetahuan admin atau pemilik toko."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-9",
+          "nomor": "9",
+          "judul": "SOP Quality Control Servis",
+          "kategori": "Layanan Servis",
+          "icon": "✅",
+          "ringkasan": "9.1 Tujuan: Memastikan perangkat benar-benar layak diserahkan kembali kepada pelanggan setelah pekerjaan servis selesai.",
+          "blocks": [
+            {
+              "id": "b-9-1",
+              "tipe": "checklist",
+              "judul": "9.2 Checklist QC Laptop / PC",
+              "items": [
+                { "teks": "Perangkat menyala normal", "checked": false },
+                { "teks": "Booting normal", "checked": false },
+                { "teks": "Keyboard dan touchpad berfungsi", "checked": false },
+                { "teks": "Port USB berfungsi", "checked": false },
+                { "teks": "WiFi dan bluetooth berfungsi jika tersedia", "checked": false },
+                { "teks": "Speaker dan kamera berfungsi jika diperlukan", "checked": false },
+                { "teks": "Charger dan baterai terbaca normal", "checked": false },
+                { "teks": "Suhu perangkat wajar setelah diuji", "checked": false },
+                { "teks": "Keluhan utama pelanggan sudah selesai", "checked": false },
+                { "teks": "Data pelanggan tetap aman", "checked": false }
+              ]
+            },
+            {
+              "id": "b-9-2",
+              "tipe": "checklist",
+              "judul": "9.3 Checklist QC Printer",
+              "items": [
+                { "teks": "Printer menyala normal", "checked": false },
+                { "teks": "Printer bisa menarik kertas", "checked": false },
+                { "teks": "Hasil cetak normal", "checked": false },
+                { "teks": "Tidak muncul error", "checked": false },
+                { "teks": "Cartridge atau sistem tinta normal", "checked": false },
+                { "teks": "Koneksi USB/WiFi berfungsi jika tersedia", "checked": false },
+                { "teks": "Test print berhasil", "checked": false }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-10",
+          "nomor": "10",
+          "judul": "SOP Pengambilan Barang Servis",
+          "kategori": "Layanan Servis",
+          "icon": "📦",
+          "ringkasan": "Prosedur penyerahan kembali unit servis yang telah selesai dan lulus QC kepada pelanggan.",
+          "blocks": [
+            {
+              "id": "b-10-1",
+              "tipe": "steps",
+              "judul": "10.1 Alur Pengambilan",
+              "items": [
+                "Admin menghubungi pelanggan bahwa barang sudah selesai.",
+                "Pelanggan datang membawa nota servis atau menunjukkan identitas yang sesuai.",
+                "Admin mengambil unit sesuai nomor nota servis.",
+                "Admin atau teknisi menunjukkan hasil servis kepada pelanggan.",
+                "Pelanggan mengecek perangkat di toko.",
+                "Admin menjelaskan garansi servis secara tertulis dan lisan.",
+                "Pelanggan melakukan pembayaran jika belum membayar.",
+                "Admin membuat nota pembayaran dan menyerahkan barang kepada pelanggan."
+              ]
+            },
+            {
+              "id": "b-10-2",
+              "tipe": "chat_templates",
+              "judul": "10.2 Kalimat yang Disarankan",
+              "items": [
+                {
+                  "label": "Penyerahan Barang & Penjelasan Garansi",
+                  "teks": "Servisnya sudah selesai, Kak. Silakan dicek dulu di toko. Untuk servis ini ada garansi pengerjaan selama [jumlah hari] hari, selama kerusakannya masih pada bagian yang sama dan tidak ada kerusakan baru akibat penggunaan."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-11",
+          "nomor": "11",
+          "judul": "SOP Garansi Servis",
+          "kategori": "Layanan Servis",
+          "icon": "🛡️",
+          "ringkasan": "Ketentuan klaim garansi pengerjaan servis agar adil dan jelas bagi pelanggan maupun toko.",
+          "blocks": [
+            {
+              "id": "b-11-1",
+              "tipe": "table",
+              "judul": "11.1 Ketentuan Garansi",
+              "headers": ["Garansi Berlaku Jika", "Garansi Tidak Berlaku Jika"],
+              "rows": [
+                ["Kerusakan sama dengan keluhan awal.", "Perangkat jatuh, terbentur, atau pecah setelah diambil."],
+                ["Tidak ada kerusakan fisik baru.", "Perangkat terkena cairan atau korsleting listrik."],
+                ["Perangkat tidak dibongkar oleh pihak lain.", "Perangkat dibongkar sendiri atau oleh toko lain."],
+                ["Keluhan masih berada pada bagian yang sama dengan tindakan servis.", "Kerusakan berbeda dari keluhan awal."],
+                ["Pelanggan membawa nota servis.", "Kerusakan software akibat instalasi pelanggan sendiri atau terkena virus setelah servis."]
+              ]
+            },
+            {
+              "id": "b-11-2",
+              "tipe": "chat_templates",
+              "judul": "11.2 Redaksi Garansi pada Nota",
+              "items": [
+                {
+                  "label": "Teks Cetak Nota Servis",
+                  "teks": "Garansi servis berlaku [7/14/30] hari untuk kerusakan yang sama. Garansi tidak berlaku apabila perangkat terkena air, jatuh, dibongkar pihak lain, mengalami kerusakan berbeda dari keluhan awal, atau rusak akibat kesalahan penggunaan setelah barang diambil."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-12",
+          "nomor": "12",
+          "judul": "SOP Pengelolaan Stok Barang",
+          "kategori": "Stok & Keuangan",
+          "icon": "📋",
+          "ringkasan": "12.1 Tujuan: Mencegah stok hilang, stok kosong, data stok tidak sesuai, dan kerugian akibat barang kecil bernilai tinggi tidak tercatat.",
+          "blocks": [
+            {
+              "id": "b-12-1",
+              "tipe": "steps",
+              "judul": "12.2 Barang Masuk",
+              "items": [
+                "Barang datang dari supplier.",
+                "Admin mengecek jumlah barang dan kondisi fisik.",
+                "Admin mencocokkan barang dengan invoice supplier.",
+                "Admin memberi kode barang atau label harga jika diperlukan.",
+                "Admin memasukkan data barang ke buku stok atau Google Sheets.",
+                "Barang disusun di etalase, gudang, atau area display."
+              ]
+            },
+            {
+              "id": "b-12-2",
+              "tipe": "steps",
+              "judul": "12.3 Barang Keluar",
+              "items": [
+                "Barang terjual kepada pelanggan.",
+                "Admin membuat nota penjualan.",
+                "Admin mengurangi jumlah stok di buku stok / sistem.",
+                "Admin mencatat metode pembayaran.",
+                "Admin menyimpan bukti transaksi."
+              ]
+            },
+            {
+              "id": "b-12-3",
+              "tipe": "table",
+              "judul": "12.4 Frekuensi Stok Opname",
+              "headers": ["Jenis Barang", "Frekuensi Pemeriksaan"],
+              "rows": [
+                ["Barang kecil cepat laku (kabel, flashdisk, mouse, headset)", "Harian atau minimal 2–3 kali seminggu"],
+                ["Aksesori umum (keyboard, adaptor, charger, tas laptop)", "Mingguan"],
+                ["Barang bernilai tinggi (laptop, SSD, RAM, printer, monitor)", "Mingguan dan setiap ada transaksi"],
+                ["Seluruh stok toko", "Bulanan"]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-13",
+          "nomor": "13",
+          "judul": "SOP Keuangan Harian",
+          "kategori": "Stok & Keuangan",
+          "icon": "💰",
+          "ringkasan": "13.1 Tujuan: Memastikan semua uang masuk dan keluar tercatat rapi, dapat diperiksa, dan tidak bercampur dengan uang pribadi.",
+          "blocks": [
+            {
+              "id": "b-13-1",
+              "tipe": "list",
+              "judul": "13.2 Komponen Laporan Harian",
+              "items": [
+                "Total penjualan barang.",
+                "Total pembayaran servis.",
+                "Total uang tunai.",
+                "Total transfer / QRIS.",
+                "Pengeluaran toko.",
+                "Piutang pelanggan jika ada.",
+                "Barang yang belum dibayar lunas.",
+                "Saldo kas akhir."
+              ]
+            },
+            {
+              "id": "b-13-2",
+              "tipe": "table",
+              "judul": "13.3 Contoh Format Laporan Harian",
+              "headers": ["Tanggal", "Penjualan Barang", "Servis", "Pengeluaran", "Tunai", "Transfer/QRIS", "Total Bersih"],
+              "rows": [
+                ["04/06/2026", "Rp2.000.000", "Rp750.000", "Rp150.000", "Rp1.200.000", "Rp1.400.000", "Rp2.600.000"]
+              ]
+            },
+            {
+              "id": "b-13-3",
+              "tipe": "alert",
+              "judul": "13.4 Aturan Keuangan",
+              "items": [
+                "Uang toko tidak boleh dicampur dengan uang pribadi.",
+                "Semua transaksi harus memiliki nota.",
+                "Semua pengeluaran harus memiliki bukti.",
+                "Diskon harus disetujui pemilik toko.",
+                "Pembatalan transaksi harus dicatat.",
+                "Pembayaran servis sebaiknya dilakukan saat barang diambil."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-14",
+          "nomor": "14",
+          "judul": "SOP Layanan WhatsApp dan Online",
+          "kategori": "Penjualan & Pelanggan",
+          "icon": "📱",
+          "ringkasan": "14.1 Standar Respons: Admin membalas chat pelanggan maksimal 5–15 menit pada jam kerja, kecuali saat sedang melayani pelanggan langsung atau terjadi kendala teknis.",
+          "blocks": [
+            {
+              "id": "b-14-1",
+              "tipe": "chat_templates",
+              "judul": "14.2 Template Balasan",
+              "items": [
+                {
+                  "label": "Balasan awal",
+                  "teks": "Halo Kak, selamat datang di [Nama Toko]. Ada yang bisa kami bantu? Untuk pembelian komputer, aksesori, atau servis?"
+                },
+                {
+                  "label": "Konsultasi servis",
+                  "teks": "Untuk servis, Kakak bisa kirimkan merek/tipe perangkat dan keluhannya. Jika memungkinkan, sertakan foto atau video kendalanya agar teknisi bisa bantu cek awal."
+                },
+                {
+                  "label": "Informasi produk",
+                  "teks": "Produk tersebut tersedia, Kak. Harga Rp[...]. Garansi [...]. Bisa langsung datang ke toko atau kami bantu siapkan terlebih dahulu."
+                },
+                {
+                  "label": "Kalimat aman",
+                  "teks": "Kami cek dulu ya, Kak. Setelah teknisi memastikan kendalanya, kami kabari estimasi biaya dan waktunya."
+                }
+              ]
+            },
+            {
+              "id": "b-14-2",
+              "tipe": "alert",
+              "judul": "14.3 Larangan Komunikasi",
+              "items": [
+                "Jangan menjawab “pasti bisa” sebelum teknisi memeriksa perangkat.",
+                "Jangan menjanjikan harga paling murah tanpa menghitung sparepart dan tingkat kesulitan.",
+                "Jangan menjanjikan selesai hari ini jika antrean teknisi padat.",
+                "Jangan menghapus bukti chat terkait konfirmasi biaya atau persetujuan pelanggan."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-15",
+          "nomor": "15",
+          "judul": "SOP Komplain Pelanggan",
+          "kategori": "Penjualan & Pelanggan",
+          "icon": "🤝",
+          "ringkasan": "15.1 Tujuan: Menangani keluhan pelanggan secara tenang, objektif, dan sesuai ketentuan garansi tanpa memperburuk hubungan dengan pelanggan.",
+          "blocks": [
+            {
+              "id": "b-15-1",
+              "tipe": "steps",
+              "judul": "15.2 Alur Penanganan Komplain",
+              "items": [
+                "Admin mendengarkan keluhan pelanggan tanpa memotong pembicaraan.",
+                "Admin meminta nota transaksi atau nota servis.",
+                "Admin mengecek riwayat transaksi, tanggal servis, dan ketentuan garansi.",
+                "Admin meminta teknisi memeriksa ulang barang bila diperlukan.",
+                "Admin melapor kepada pemilik toko jika komplain berpotensi menimbulkan penggantian barang, refund, atau konflik.",
+                "Admin memberikan solusi berdasarkan hasil pengecekan dan ketentuan garansi.",
+                "Admin mencatat komplain dalam log komplain pelanggan."
+              ]
+            },
+            {
+              "id": "b-15-2",
+              "tipe": "chat_templates",
+              "judul": "15.3 Kalimat yang Disarankan",
+              "items": [
+                {
+                  "label": "Respons Penerimaan Komplain",
+                  "teks": "Baik Kak, kami cek dulu berdasarkan nota dan riwayat servisnya. Kalau memang masih masuk garansi dan kendalanya sama, kami bantu tangani sesuai ketentuan garansi."
+                }
+              ]
+            },
+            {
+              "id": "b-15-3",
+              "tipe": "alert",
+              "judul": "15.4 Larangan Saat Menangani Komplain",
+              "items": [
+                "Menyalahkan pelanggan secara langsung.",
+                "Berdebat dengan pelanggan.",
+                "Memberi jawaban kasar atau defensif.",
+                "Menjanjikan ganti rugi tanpa persetujuan pemilik toko.",
+                "Menghapus bukti chat, nota, atau catatan servis."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-16",
+          "nomor": "16",
+          "judul": "SOP Penutupan Toko",
+          "kategori": "Operasional Harian",
+          "icon": "🌙",
+          "ringkasan": "Prosedur penutupan operasional toko, pengamanan kas, dan pemeriksaan keamanan perangkat.",
+          "blocks": [
+            {
+              "id": "b-16-1",
+              "tipe": "steps",
+              "judul": "16.1 Langkah Kerja",
+              "items": [
+                "Admin menghitung uang kas.",
+                "Admin mencocokkan uang dengan laporan transaksi.",
+                "Admin mencatat transaksi hari itu.",
+                "Admin mengecek barang display dan etalase.",
+                "Admin mengecek daftar servis masuk, servis selesai, dan servis yang belum selesai.",
+                "Teknisi merapikan meja kerja dan alat servis.",
+                "Teknisi mengamankan perangkat pelanggan di area penyimpanan.",
+                "Admin mematikan komputer kasir, printer, lampu, dan perangkat elektronik yang tidak perlu menyala.",
+                "Toko dikunci dengan aman."
+              ]
+            },
+            {
+              "id": "b-16-2",
+              "tipe": "checklist",
+              "judul": "16.2 Checklist Penutupan Toko",
+              "items": [
+                { "teks": "Kas sudah dihitung dan cocok dengan laporan", "checked": false },
+                { "teks": "Nota sudah direkap", "checked": false },
+                { "teks": "Barang display aman", "checked": false },
+                { "teks": "Perangkat pelanggan disimpan aman", "checked": false },
+                { "teks": "Ruang servis rapi", "checked": false },
+                { "teks": "Komputer, printer, dan listrik yang tidak perlu sudah dimatikan", "checked": false },
+                { "teks": "Pintu, etalase, dan lemari terkunci", "checked": false }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-17",
+          "nomor": "17",
+          "judul": "Dokumen Pendukung dan KPI",
+          "kategori": "Umum & Manajemen",
+          "icon": "📊",
+          "ringkasan": "Daftar kelengkapan dokumen administrasi toko dan indikator penilaian kinerja (KPI) tim.",
+          "blocks": [
+            {
+              "id": "b-17-1",
+              "tipe": "list",
+              "judul": "17.1 Dokumen yang Perlu Disiapkan",
+              "items": [
+                "Form penerimaan servis",
+                "Nota penjualan",
+                "Nota servis",
+                "Buku stok barang atau Google Sheets stok",
+                "Laporan kas harian",
+                "Daftar harga servis",
+                "Daftar harga produk",
+                "Checklist quality control",
+                "Log komplain pelanggan",
+                "Laporan stok opname",
+                "Data supplier",
+                "Data garansi produk"
+              ]
+            },
+            {
+              "id": "b-17-2",
+              "tipe": "table",
+              "judul": "17.2 KPI Sederhana",
+              "headers": ["Bagian", "Indikator", "Target"],
+              "rows": [
+                ["Admin", "Respons WhatsApp", "Maksimal 15 menit saat jam kerja"],
+                ["Admin", "Nota transaksi", "100% transaksi tercatat"],
+                ["Admin", "Stok opname", "Minimal 1 kali per minggu (Jumat)"],
+                ["Teknisi", "Diagnosa awal", "Maksimal 1x24 jam untuk kasus ringan"],
+                ["Teknisi", "Servis selesai tepat waktu", "Minimal 80% sesuai estimasi"],
+                ["Toko", "Komplain berulang", "Maksimal 5% dari total servis"],
+                ["Toko", "Selisih stok", "0 kasus tanpa penjelasan"],
+                ["Toko", "Laporan kas harian", "Setiap hari kerja"]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sop-18",
+          "nomor": "18",
+          "judul": "Alur Kerja Inti Toko",
+          "kategori": "Umum & Manajemen",
+          "icon": "🔄",
+          "ringkasan": "Prioritas penerapan awal: jalankan SOP penerimaan servis, konfirmasi biaya servis, quality control servis, nota transaksi, stok, dan laporan kas harian terlebih dahulu. Bagian tersebut paling menentukan ketertiban operasional toko.",
+          "blocks": [
+            {
+              "id": "b-18-1",
+              "tipe": "table",
+              "judul": "Ringkasan Alur Kerja Inti",
+              "headers": ["Alur", "Urutan Proses"],
+              "rows": [
+                [
+                  "Penjualan",
+                  "Pelanggan datang/chat → admin gali kebutuhan → rekomendasi produk → pelanggan setuju → admin buat nota → pembayaran → cek barang → barang diserahkan."
+                ],
+                [
+                  "Servis",
+                  "Pelanggan datang → admin catat data dan keluhan → teknisi diagnosa → admin konfirmasi biaya → pelanggan setuju → teknisi mengerjakan → QC → pelanggan dihubungi → barang diambil → pembayaran → garansi dijelaskan."
+                ],
+                [
+                  "Stok",
+                  "Barang datang → admin cek invoice → input stok → barang disimpan/display → barang terjual → stok dikurangi → stok opname berkala."
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lampiran-1",
+          "nomor": "Lamp. 1",
+          "judul": "Lampiran 1: Form Penerimaan Servis",
+          "kategori": "Lampiran Form Kerja",
+          "icon": "📝",
+          "ringkasan": "Formulir standar pencatatan saat unit pertama kali diterima dari pelanggan.",
+          "blocks": [
+            {
+              "id": "b-lamp-1",
+              "tipe": "table",
+              "judul": "Form Penerimaan Servis",
+              "headers": ["Field", "Isi"],
+              "rows": [
+                ["Nomor Servis", "SV-YYYYMMDD-..."],
+                ["Tanggal Masuk", ""],
+                ["Nama Pelanggan", ""],
+                ["Nomor WhatsApp", ""],
+                ["Jenis Perangkat", "Laptop / PC / Printer / Lainnya"],
+                ["Merek dan Tipe", ""],
+                ["Serial Number", ""],
+                ["Keluhan Pelanggan", ""],
+                ["Kelengkapan yang Dititipkan", "Charger / Tas / Kabel / Adaptor / Lainnya: ............."],
+                ["Kondisi Fisik Awal", ""],
+                ["Password Perangkat (bila diperlukan)", ""],
+                ["Estimasi Pengecekan", ""],
+                ["Catatan Admin", ""],
+                ["Tanda Tangan Pelanggan", ""]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lampiran-2",
+          "nomor": "Lamp. 2",
+          "judul": "Lampiran 2: Form Hasil Diagnosa Teknisi",
+          "kategori": "Lampiran Form Kerja",
+          "icon": "🩺",
+          "ringkasan": "Formulir pencatatan hasil pemeriksaan teknisi dan estimasi biaya/waktu.",
+          "blocks": [
+            {
+              "id": "b-lamp-2",
+              "tipe": "table",
+              "judul": "Form Hasil Diagnosa Teknisi",
+              "headers": ["Field", "Isi"],
+              "rows": [
+                ["Nomor Servis", ""],
+                ["Nama Teknisi", ""],
+                ["Tanggal Diagnosa", ""],
+                ["Keluhan Awal", ""],
+                ["Hasil Pengecekan", ""],
+                ["Tindakan yang Disarankan", ""],
+                ["Estimasi Biaya", "Rp ..........................."],
+                ["Estimasi Waktu Pengerjaan", ""],
+                ["Status Konfirmasi Pelanggan", "Setuju / Tidak Setuju / Menunggu Jawaban"],
+                ["Catatan Teknisi", ""]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lampiran-3",
+          "nomor": "Lamp. 3",
+          "judul": "Lampiran 3: Form Quality Control Servis",
+          "kategori": "Lampiran Form Kerja",
+          "icon": "☑️",
+          "ringkasan": "Formulir pemeriksaan akhir sebelum perangkat diserahkan kembali ke pelanggan.",
+          "blocks": [
+            {
+              "id": "b-lamp-3",
+              "tipe": "checklist",
+              "judul": "Checklist Form QC Servis",
+              "items": [
+                { "teks": "Keluhan utama sudah selesai", "checked": false },
+                { "teks": "Perangkat menyala normal", "checked": false },
+                { "teks": "Fungsi utama sudah diuji", "checked": false },
+                { "teks": "Tidak ada kerusakan baru", "checked": false },
+                { "teks": "Kelengkapan sesuai catatan awal", "checked": false },
+                { "teks": "Unit siap diserahkan kepada pelanggan", "checked": false }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lampiran-4",
+          "nomor": "Lamp. 4",
+          "judul": "Lampiran 4: Format Laporan Kas Harian",
+          "kategori": "Lampiran Form Kerja",
+          "icon": "💵",
+          "ringkasan": "Tabel rekapitulasi kas masuk dan keluar setiap hari kerja.",
+          "blocks": [
+            {
+              "id": "b-lamp-4",
+              "tipe": "table",
+              "judul": "Format Laporan Kas Harian",
+              "headers": ["Tanggal", "Penjualan", "Servis", "Pengeluaran", "Tunai", "Transfer/QRIS", "Saldo Akhir", "Admin"],
+              "rows": [
+                ["", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", "", ""]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "lampiran-5",
+          "nomor": "Lamp. 5",
+          "judul": "Lampiran 5: Format Stok Opname",
+          "kategori": "Lampiran Form Kerja",
+          "icon": "📦",
+          "ringkasan": "Tabel pemeriksaan kesesuaian stok sistem dengan stok fisik di toko.",
+          "blocks": [
+            {
+              "id": "b-lamp-5",
+              "tipe": "table",
+              "judul": "Format Stok Opname",
+              "headers": ["Tanggal", "Kode Barang", "Nama Barang", "Stok Sistem", "Stok Fisik", "Selisih", "Keterangan"],
+              "rows": [
+                ["", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", ""],
+                ["", "", "", "", "", "", ""]
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    const STORAGE_KEY = "sop_toko_komputer_data_v1";
+    let sopData = JSON.parse(JSON.stringify(DEFAULT_SOP_DATA));
+    let isEditMode = false;
+    let activeCategory = "Semua";
+    let searchQuery = "";
+    let collapsedSections = new Set();
+    let isPythonServerAvailable = false;
+
+    // Inisialisasi saat halaman dimuat
+    async function initApp() {
+      // Cek tema gelap
+      if (localStorage.getItem("sop_theme") === "dark") {
+        document.documentElement.classList.add("dark");
+        document.getElementById("themeIcon").textContent = "☀️";
+      }
+
+      // 1. Coba muat dari server Python (/api/sop) terlebih dahulu
+      let loadedFromServer = false;
+      try {
+        const res = await fetch("./api/sop", { cache: "no-store" });
+        if (res.ok) {
+          const serverData = await res.json();
+          if (serverData && serverData.sections) {
+            sopData = serverData;
+            isPythonServerAvailable = true;
+            loadedFromServer = true;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(sopData));
+            updateServerBadge("Server Python Aktif");
+          }
+        }
+      } catch (err) {
+        // Abaikan jika bukan di server Python
+      }
+
+      // 2. Jika di GitHub Pages / hosting statis (bukan server Python):
+      // Gunakan data editan di localStorage jika sudah pernah diedit di perangkat ini,
+      // atau muat dari file ./sop_data.json di repositori GitHub
+      if (!loadedFromServer) {
+        const savedLocal = localStorage.getItem(STORAGE_KEY);
+        if (savedLocal) {
+          try {
+            sopData = JSON.parse(savedLocal);
+            updateServerBadge("Tersimpan di Perangkat");
+          } catch (e) {
+            sopData = JSON.parse(JSON.stringify(DEFAULT_SOP_DATA));
+          }
+        } else {
+          try {
+            const jsonRes = await fetch("./sop_data.json", { cache: "no-store" });
+            if (jsonRes.ok) {
+              const repoData = await jsonRes.json();
+              if (repoData && repoData.sections) {
+                sopData = repoData;
+              }
+            }
+          } catch (e) {
+            // Gunakan DEFAULT_SOP_DATA jika dibuka via file:// lokal
+          }
+        }
+      }
+
+      renderAll();
+    }
+
+    function updateServerBadge(text) {
+      const badge = document.getElementById("serverStatusBadge");
+      if (badge) {
+        badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${text}`;
+      }
+    }
+
+    // Simpan perubahan ke localStorage & Server Python (bila aktif)
+    async function persistData(toastMsg = "Perubahan disimpan") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sopData));
+
+      if (isPythonServerAvailable) {
+        try {
+          await fetch("/api/sop", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sopData)
+          });
+        } catch (e) {
+          console.warn("Gagal sinkronisasi ke server Python, tersimpan di browser:", e);
+        }
+      }
+
+      if (toastMsg) {
+        showToast(toastMsg);
+      }
+    }
+
+    function showToast(msg, icon = "✅") {
+      const toast = document.getElementById("toastNotification");
+      document.getElementById("toastIcon").textContent = icon;
+      document.getElementById("toastText").textContent = msg;
+      toast.classList.remove("hidden");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 2400);
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    // Ganti placeholder [Nama Toko] dengan nama toko asli jika sudah diatur
+    function applyStoreName(text) {
+      const storeName = sopData.metadata.nama_toko || "[Nama Toko]";
+      return String(text || "").replace(/\[Nama Toko\]/gi, storeName);
+    }
+
+    function renderAll() {
+      renderMetadata();
+      renderCategories();
+      renderTOC();
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    function renderMetadata() {
+      const m = sopData.metadata;
+      document.getElementById("headerStoreName").textContent = m.nama_toko || "[Nama Toko]";
+      document.getElementById("metaVersiBadge").textContent = `Versi ${m.versi || "1.0"}`;
+      document.getElementById("metaJudul").textContent = m.judul || "STANDAR OPERASIONAL PROSEDUR";
+      document.getElementById("metaNamaToko").textContent = m.nama_toko || "[Nama Toko]";
+      document.getElementById("metaDeskripsi").textContent = m.deskripsi || "";
+
+      document.getElementById("ctrlNamaToko").textContent = m.nama_toko || "-";
+      document.getElementById("ctrlTanggal").textContent = m.tanggal_berlaku || "-";
+      document.getElementById("ctrlDisetujui").textContent = m.disetujui_oleh || "-";
+      document.getElementById("ctrlBerlaku").textContent = m.berlaku_untuk || "-";
+      document.getElementById("ctrlDisusun").textContent = m.disusun_oleh || "-";
+      document.getElementById("ctrlEvaluasi").textContent = m.frekuensi_evaluasi || "-";
+
+      document.getElementById("tblDisusun").textContent = m.disusun_oleh || "-";
+      document.getElementById("tblDiperiksa").textContent = m.diperiksa_oleh || "-";
+      document.getElementById("tblDisetujui").textContent = m.disetujui_oleh || "-";
+      document.getElementById("tblTanggal1").textContent = m.tanggal_berlaku || "-";
+      document.getElementById("tblTanggal2").textContent = m.tanggal_berlaku || "-";
+      document.getElementById("tblTanggal3").textContent = m.tanggal_berlaku || "-";
+
+      document.getElementById("footerPengesahan").textContent = m.catatan_pengesahan || "";
+    }
+
+    function renderCategories() {
+      const categories = ["Semua", ...new Set(sopData.sections.map(s => s.kategori || "Lainnya"))];
+      const desktopContainer = document.getElementById("categoryFilterContainer");
+      const mobileContainer = document.getElementById("mobileCategoryPills");
+
+      const html = categories.map(cat => {
+        const isActive = activeCategory === cat;
+        const activeClass = isActive
+          ? "bg-brand-600 text-white shadow-xs"
+          : "bg-slate-100 dark:bg-slate-700/70 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700";
+        return `
+          <button
+            onclick="setCategory('${escapeHtml(cat)}')"
+            class="px-2.5 py-1 rounded-lg text-xs font-medium transition shrink-0 ${activeClass}"
+          >
+            ${escapeHtml(cat)}
+          </button>
+        `;
+      }).join("");
+
+      desktopContainer.innerHTML = html;
+      mobileContainer.innerHTML = html;
+    }
+
+    function setCategory(cat) {
+      activeCategory = cat;
+      renderCategories();
+      renderTOC();
+      renderSections();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      const dInput = document.getElementById("desktopSearchInput");
+      const mInput = document.getElementById("mobileSearchInput");
+      if (dInput && dInput.value !== val) dInput.value = val;
+      if (mInput && mInput.value !== val) mInput.value = val;
+
+      document.getElementById("clearSearchDesktop").classList.toggle("hidden", !searchQuery);
+      document.getElementById("clearSearchMobile").classList.toggle("hidden", !searchQuery);
+
+      renderTOC();
+      renderSections();
+    }
+
+    function getFilteredSections() {
+      return sopData.sections.filter(sec => {
+        if (activeCategory !== "Semua" && sec.kategori !== activeCategory) {
+          return false;
+        }
+        if (!searchQuery) return true;
+        const haystack = JSON.stringify(sec).toLowerCase();
+        return haystack.includes(searchQuery);
+      });
+    }
+
+    function renderTOC() {
+      const tocEl = document.getElementById("tocList");
+      const filtered = getFilteredSections();
+
+      if (filtered.length === 0) {
+        tocEl.innerHTML = `<p class="px-3 py-4 text-xs text-slate-400 text-center">Tidak ada bab yang cocok</p>`;
+        return;
+      }
+
+      tocEl.innerHTML = filtered.map(sec => `
+        <a
+          href="#${escapeHtml(sec.id)}"
+          onclick="closeSidebarOnMobile()"
+          class="flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-700/70 hover:text-brand-600 dark:hover:text-brand-400 transition group"
+        >
+          <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-xs shrink-0 group-hover:bg-brand-100 dark:group-hover:bg-brand-900/40">
+            ${escapeHtml(sec.icon || "📄")}
+          </span>
+          <span class="truncate">
+            <strong class="text-slate-800 dark:text-slate-200">${escapeHtml(sec.nomor)}.</strong> ${escapeHtml(sec.judul)}
+          </span>
+        </a>
+      `).join("");
+    }
+
+    function renderSections() {
+      const container = document.getElementById("sopSectionsContainer");
+      const filtered = getFilteredSections();
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-10 text-center space-y-2">
+            <div class="text-3xl">🔍</div>
+            <h3 class="font-bold text-base text-slate-800 dark:text-white">Tidak ditemukan SOP yang sesuai</h3>
+            <p class="text-xs text-slate-500">Coba gunakan kata kunci lain atau pilih kategori "Semua".</p>
+            <button onclick="setCategory('Semua'); handleSearch('');" class="mt-2 px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-semibold">
+              Tampilkan Semua SOP
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map((sec, secIdx) => {
+        const isCollapsed = collapsedSections.has(sec.id);
+        const realSecIndex = sopData.sections.findIndex(s => s.id === sec.id);
+
+        return `
+          <article id="${escapeHtml(sec.id)}" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs overflow-hidden transition sop-card scroll-mt-20">
+            <!-- Section Header -->
+            <div class="px-4 sm:px-6 py-4 bg-slate-50/70 dark:bg-slate-800/80 border-b border-slate-100 dark:border-slate-700/70 flex items-start justify-between gap-3">
+              <div class="flex items-start gap-3 min-w-0 flex-1 cursor-pointer" onclick="toggleSectionCollapse('${escapeHtml(sec.id)}')">
+                <div class="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-brand-900/30 border border-brand-100 dark:border-brand-800 flex items-center justify-center text-xl shrink-0">
+                  ${escapeHtml(sec.icon || "📌")}
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-brand-600 text-white">
+                      SOP ${escapeHtml(sec.nomor)}
+                    </span>
+                    <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-200/70 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                      ${escapeHtml(sec.kategori || "Umum")}
+                    </span>
+                  </div>
+                  <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-1 leading-snug">
+                    ${escapeHtml(sec.judul)}
+                  </h3>
+                </div>
+              </div>
+
+              <!-- Section Action Controls -->
+              <div class="flex items-center gap-1 shrink-0 no-print">
+                ${isEditMode ? `
+                  <button onclick="editSectionHeader(${realSecIndex})" class="p-1.5 rounded-lg text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 hover:bg-amber-200" title="Edit Judul & Ringkasan Bab">
+                    ✏️ Edit Bab
+                  </button>
+                  <button onclick="moveSection(${realSecIndex}, -1)" class="p-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200" title="Pindah ke Atas">↑</button>
+                  <button onclick="moveSection(${realSecIndex}, 1)" class="p-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200" title="Pindah ke Bawah">↓</button>
+                  <button onclick="deleteSection(${realSecIndex})" class="p-1.5 rounded-lg text-xs bg-rose-50 dark:bg-rose-900/30 text-rose-600 hover:bg-rose-100" title="Hapus Bab SOP">🗑️</button>
+                ` : ""}
+                <button
+                  onclick="toggleSectionCollapse('${escapeHtml(sec.id)}')"
+                  class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  title="Buka / Tutup Bab"
+                >
+                  ${isCollapsed ? "➕" : "➖"}
+                </button>
+              </div>
+            </div>
+
+            <!-- Section Body -->
+            <div class="${isCollapsed ? 'hidden' : 'block'} p-4 sm:p-6 space-y-5">
+              ${sec.ringkasan ? `
+                <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-700/30 border-l-4 border-brand-500 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  ${escapeHtml(applyStoreName(sec.ringkasan))}
+                </div>
+              ` : ""}
+
+              <!-- Blocks inside Section -->
+              <div class="space-y-5">
+                ${(sec.blocks || []).map((block, bIdx) => renderBlock(realSecIndex, bIdx, block)).join("")}
+              </div>
+
+              <!-- Edit Mode: Add New Block inside this SOP Section -->
+              ${isEditMode ? `
+                <div class="pt-3 border-t border-dashed border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2 no-print">
+                  <span class="text-xs text-slate-400">Ingin menambah bagian baru (langkah kerja, checklist, tabel, atau template WA) di SOP ${escapeHtml(sec.nomor)}?</span>
+                  <button
+                    onclick="openAddBlockModal('${escapeHtml(sec.id)}')"
+                    class="px-3 py-1.5 rounded-xl bg-brand-50 dark:bg-brand-900/30 hover:bg-brand-100 text-brand-700 dark:text-brand-300 text-xs font-semibold border border-brand-200 dark:border-brand-800 transition"
+                  >
+                    + Tambah Sub-Bagian / Langkah Baru
+                  </button>
+                </div>
+              ` : ""}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderBlock(secIdx, blockIdx, block) {
+      const editControls = isEditMode ? `
+        <div class="flex items-center gap-1 no-print">
+          <button onclick="renameBlock(${secIdx}, ${blockIdx})" class="px-2 py-0.5 rounded text-[11px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200">✏️ Judul</button>
+          <button onclick="deleteBlock(${secIdx}, ${blockIdx})" class="px-2 py-0.5 rounded text-[11px] bg-rose-50 dark:bg-rose-900/30 text-rose-600 hover:bg-rose-100">🗑️ Hapus Bagian</button>
+        </div>
+      ` : "";
+
+      // 1. TIPE STEPS (Langkah Kerja Berurutan)
+      if (block.tipe === "steps") {
+        const itemsHtml = (block.items || []).map((item, iIdx) => `
+          <li class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50/70 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700/60 group">
+            <span class="w-6 h-6 rounded-full bg-brand-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              ${iIdx + 1}
+            </span>
+            <span class="flex-1 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">${escapeHtml(applyStoreName(item))}</span>
+            ${isEditMode ? renderItemEditButtons(secIdx, blockIdx, iIdx) : ""}
+          </li>
+        `).join("");
+
+        return `
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                <span class="text-brand-600">🔢</span> ${escapeHtml(block.judul)}
+              </h4>
+              ${editControls}
+            </div>
+            <ol class="space-y-2">${itemsHtml}</ol>
+            <div class="no-print">
+              <button onclick="addStepOrListItem(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100">
+                ＋ Tambah Langkah Kerja
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. TIPE CHECKLIST INTERAKTIF
+      if (block.tipe === "checklist") {
+        const items = block.items || [];
+        const doneCount = items.filter(i => i.checked).length;
+        const itemsHtml = items.map((item, iIdx) => `
+          <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl border ${item.checked ? 'bg-emerald-50/60 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800/60' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'} transition">
+            <label class="flex items-center gap-3 flex-1 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                ${item.checked ? "checked" : ""}
+                onchange="toggleChecklistItem(${secIdx}, ${blockIdx}, ${iIdx}, this.checked)"
+                class="w-4 h-4 sm:w-5 sm:h-5 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+              />
+              <span class="text-xs sm:text-sm ${item.checked ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-700 dark:text-slate-200 font-medium'}">
+                ${escapeHtml(item.teks)}
+              </span>
+            </label>
+            ${isEditMode ? renderItemEditButtons(secIdx, blockIdx, iIdx, true) : ""}
+          </div>
+        `).join("");
+
+        return `
+          <div class="space-y-2.5 p-3.5 sm:p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-700/20 border border-slate-200/80 dark:border-slate-700">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h4 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                <span>☑️</span> ${escapeHtml(block.judul)}
+              </h4>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">
+                  ${doneCount}/${items.length} Selesai
+                </span>
+                ${editControls}
+              </div>
+            </div>
+            <div class="space-y-2">${itemsHtml}</div>
+            <div class="no-print pt-1">
+              <button onclick="addChecklistItem(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100">
+                ＋ Tambah Item Checklist
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. TIPE ALERT / LARANGAN PENTING
+      if (block.tipe === "alert") {
+        const itemsHtml = (block.items || []).map((item, iIdx) => `
+          <li class="flex items-start justify-between gap-2 text-xs sm:text-sm text-rose-900 dark:text-rose-200">
+            <div class="flex items-start gap-2">
+              <span class="text-rose-500 mt-0.5">⛔</span>
+              <span>${escapeHtml(applyStoreName(item))}</span>
+            </div>
+            ${isEditMode ? renderItemEditButtons(secIdx, blockIdx, iIdx) : ""}
+          </li>
+        `).join("");
+
+        return `
+          <div class="p-4 rounded-2xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/70 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-xs sm:text-sm font-bold text-rose-800 dark:text-rose-300 flex items-center gap-1.5">
+                <span>⚠️</span> ${escapeHtml(block.judul)}
+              </h4>
+              ${editControls}
+            </div>
+            <ul class="space-y-1.5">${itemsHtml}</ul>
+            <div class="no-print">
+              <button onclick="addStepOrListItem(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-rose-700 dark:text-rose-300 border border-rose-300">
+                ＋ Tambah Aturan / Larangan
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. TIPE CHAT TEMPLATES (Kalimat Layanan & WhatsApp)
+      if (block.tipe === "chat_templates") {
+        const cardsHtml = (block.items || []).map((tpl, iIdx) => {
+          const finalMsg = applyStoreName(tpl.teks);
+          return `
+            <div class="p-3.5 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/60 flex flex-col justify-between gap-2.5">
+              <div class="space-y-1">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300">
+                    💬 ${escapeHtml(tpl.label)}
+                  </span>
+                  <button
+                    onclick="copyChatTemplate(${secIdx}, ${blockIdx}, ${iIdx})"
+                    class="no-print px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 shadow-2xs"
+                  >
+                    📋 Salin Pesan
+                  </button>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 italic leading-relaxed pt-1">
+                  "${escapeHtml(finalMsg)}"
+                </p>
+              </div>
+              ${isEditMode ? `
+                <div class="pt-2 border-t border-emerald-200/60 dark:border-emerald-800/50 flex justify-end gap-1 no-print">
+                  <button onclick="editChatTemplateItem(${secIdx}, ${blockIdx}, ${iIdx})" class="px-2 py-0.5 rounded text-[11px] bg-amber-100 text-amber-800">✏️ Edit Template</button>
+                  <button onclick="deleteBlockItem(${secIdx}, ${blockIdx}, ${iIdx})" class="px-2 py-0.5 rounded text-[11px] bg-rose-100 text-rose-700">🗑️ Hapus</button>
+                </div>
+              ` : ""}
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                <span>📱</span> ${escapeHtml(block.judul)}
+              </h4>
+              ${editControls}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${cardsHtml}</div>
+            <div class="no-print">
+              <button onclick="addChatTemplateItem(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200">
+                ＋ Tambah Template Chat Baru
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. TIPE TABLE (Tabel Responsif HP & Laptop)
+      if (block.tipe === "table") {
+        const headers = block.headers || [];
+        const rows = block.rows || [];
+
+        const theadHtml = headers.map((h, hIdx) => `
+          <th class="px-3 py-2.5 text-left text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 bg-slate-100/80 dark:bg-slate-700/60">
+            <div class="flex items-center justify-between gap-1">
+              <span>${escapeHtml(h)}</span>
+              ${isEditMode ? `<button onclick="editTableHeader(${secIdx}, ${blockIdx}, ${hIdx})" class="text-[10px] text-amber-600 hover:underline no-print">✏️</button>` : ""}
+            </div>
+          </th>
+        `).join("");
+
+        const tbodyHtml = rows.map((row, rIdx) => `
+          <tr class="border-b border-slate-100 dark:border-slate-700/60 hover:bg-slate-50/80 dark:hover:bg-slate-700/30">
+            ${row.map((cell, cIdx) => `
+              <td class="px-3 py-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 align-top">
+                <div class="flex items-start justify-between gap-1">
+                  <span>${escapeHtml(applyStoreName(cell)) || '<span class="text-slate-300 dark:text-slate-600">................</span>'}</span>
+                  ${isEditMode ? `<button onclick="editTableCell(${secIdx}, ${blockIdx}, ${rIdx}, ${cIdx})" class="text-[11px] text-amber-600 hover:text-amber-800 shrink-0 no-print" title="Edit Sel">✏️</button>` : ""}
+                </div>
+              </td>
+            `).join("")}
+            ${isEditMode ? `
+              <td class="px-2 py-2 text-right w-10 no-print">
+                <button onclick="deleteTableRow(${secIdx}, ${blockIdx}, ${rIdx})" class="p-1 rounded text-xs bg-rose-50 text-rose-600 hover:bg-rose-100" title="Hapus Baris">🗑️</button>
+              </td>
+            ` : ""}
+          </tr>
+        `).join("");
+
+        return `
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                <span>📊</span> ${escapeHtml(block.judul)}
+              </h4>
+              ${editControls}
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+              <table class="w-full border-collapse min-w-[420px]">
+                <thead>
+                  <tr>
+                    ${theadHtml}
+                    ${isEditMode ? `<th class="w-10 bg-slate-100/80 dark:bg-slate-700/60 border-b border-slate-200 dark:border-slate-700 no-print"></th>` : ""}
+                  </tr>
+                </thead>
+                <tbody>${tbodyHtml}</tbody>
+              </table>
+            </div>
+            <div class="flex flex-wrap gap-2 no-print">
+              <button onclick="addTableRow(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200">
+                ＋ Tambah Baris Tabel
+              </button>
+              <button onclick="addTableColumn(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
+                ＋ Tambah Kolom
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 6. DEFAULT: TIPE LIST (Bullet Points)
+      const listHtml = (block.items || []).map((item, iIdx) => `
+        <li class="flex items-start justify-between gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+          <div class="flex items-start gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-500 mt-2 shrink-0"></span>
+            <span>${escapeHtml(applyStoreName(item))}</span>
+          </div>
+          ${isEditMode ? renderItemEditButtons(secIdx, blockIdx, iIdx) : ""}
+        </li>
+      `).join("");
+
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <h4 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">${escapeHtml(block.judul)}</h4>
+            ${editControls}
+          </div>
+          <ul class="space-y-1.5 pl-1">${listHtml}</ul>
+          <div class="no-print">
+            <button onclick="addStepOrListItem(${secIdx}, ${blockIdx})" class="${isEditMode ? 'inline-flex' : 'hidden'} items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200">
+              ＋ Tambah Item Baru
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderItemEditButtons(secIdx, blockIdx, itemIdx, isChecklist = false) {
+      return `
+        <div class="flex items-center gap-1 shrink-0 no-print">
+          <button onclick="editBlockItem(${secIdx}, ${blockIdx}, ${itemIdx}, ${isChecklist})" class="p-1 rounded text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 hover:bg-amber-200" title="Edit Item">✏️</button>
+          <button onclick="moveBlockItem(${secIdx}, ${blockIdx}, ${itemIdx}, -1)" class="p-1 rounded text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200" title="Geser Naik">↑</button>
+          <button onclick="moveBlockItem(${secIdx}, ${blockIdx}, ${itemIdx}, 1)" class="p-1 rounded text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200" title="Geser Turun">↓</button>
+          <button onclick="deleteBlockItem(${secIdx}, ${blockIdx}, ${itemIdx})" class="p-1 rounded text-xs bg-rose-50 dark:bg-rose-900/30 text-rose-600 hover:bg-rose-100" title="Hapus Item">🗑️</button>
+        </div>
+      `;
+    }
+
+    // INTERAKSI CHECKLIST & PROGRESS
+    function toggleChecklistItem(secIdx, blockIdx, itemIdx, isChecked) {
+      const item = sopData.sections[secIdx].blocks[blockIdx].items[itemIdx];
+      item.checked = isChecked;
+      persistData(isChecked ? "Checklist dicentang ✅" : "Centang dibatalkan");
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    function updateChecklistProgress() {
+      let total = 0;
+      let checked = 0;
+      sopData.sections.forEach(sec => {
+        (sec.blocks || []).forEach(b => {
+          if (b.tipe === "checklist") {
+            (b.items || []).forEach(it => {
+              total++;
+              if (it.checked) checked++;
+            });
+          }
+        });
+      });
+
+      const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+      document.getElementById("globalChecklistText").textContent = `${checked}/${total} Selesai (${pct}%)`;
+      document.getElementById("globalChecklistBar").style.width = `${pct}%`;
+    }
+
+    function resetAllChecklists() {
+      if (!confirm("Reset semua centang checklist kembali ke awal (kosong)?")) return;
+      sopData.sections.forEach(sec => {
+        (sec.blocks || []).forEach(b => {
+          if (b.tipe === "checklist") {
+            (b.items || []).forEach(it => { it.checked = false; });
+          }
+        });
+      });
+      persistData("Semua checklist berhasil di-reset");
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    // COPY TEMPLATE CHAT WHATSAPP
+    function copyChatTemplate(secIdx, blockIdx, itemIdx) {
+      const tpl = sopData.sections[secIdx].blocks[blockIdx].items[itemIdx];
+      const finalMsg = applyStoreName(tpl.teks);
+      navigator.clipboard.writeText(finalMsg).then(() => {
+        showToast("Pesan berhasil disalin! Siap ditempel ke WhatsApp.", "📋");
+      });
+    }
+
+    // MODE EDIT & CRUD OPERATIONS
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+      const btn = document.getElementById("editModeBtn");
+      const text = document.getElementById("editModeText");
+      const banner = document.getElementById("editModeBanner");
+      const mobileLabel = document.getElementById("mobileEditLabel");
+
+      if (isEditMode) {
+        text.textContent = "Mode Edit: ON";
+        btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all bg-amber-500 text-slate-950 border-amber-600 shadow-xs";
+        banner.classList.remove("hidden");
+        mobileLabel.textContent = "Selesai Edit";
+        showToast("Mode Edit Aktif — Silakan tambah/ubah item SOP", "✏️");
+      } else {
+        text.textContent = "Mode Edit: OFF";
+        btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-900/30 dark:text-amber-200 dark:border-amber-700";
+        banner.classList.add("hidden");
+        mobileLabel.textContent = "Mode Edit";
+      }
+
+      renderSections();
+    }
+
+    // Tambah / Edit / Hapus Item dalam Blok
+    function addStepOrListItem(secIdx, blockIdx) {
+      const val = prompt("Masukkan teks langkah / item baru:");
+      if (!val || !val.trim()) return;
+      sopData.sections[secIdx].blocks[blockIdx].items.push(val.trim());
+      persistData("Langkah baru ditambahkan");
+      renderSections();
+    }
+
+    function addChecklistItem(secIdx, blockIdx) {
+      const val = prompt("Masukkan item pemeriksaan checklist baru:");
+      if (!val || !val.trim()) return;
+      sopData.sections[secIdx].blocks[blockIdx].items.push({
+        teks: val.trim(),
+        checked: false
+      });
+      persistData("Item checklist ditambahkan");
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    function editBlockItem(secIdx, blockIdx, itemIdx, isChecklist = false) {
+      const items = sopData.sections[secIdx].blocks[blockIdx].items;
+      const currentVal = isChecklist ? items[itemIdx].teks : items[itemIdx];
+      const updated = prompt("Edit teks item:", currentVal);
+      if (updated === null) return;
+      if (isChecklist) {
+        items[itemIdx].teks = updated.trim();
+      } else {
+        items[itemIdx] = updated.trim();
+      }
+      persistData("Item berhasil diperbarui");
+      renderSections();
+    }
+
+    function moveBlockItem(secIdx, blockIdx, itemIdx, direction) {
+      const items = sopData.sections[secIdx].blocks[blockIdx].items;
+      const targetIdx = itemIdx + direction;
+      if (targetIdx < 0 || targetIdx >= items.length) return;
+      const temp = items[itemIdx];
+      items[itemIdx] = items[targetIdx];
+      items[targetIdx] = temp;
+      persistData("Urutan langkah diperbarui");
+      renderSections();
+    }
+
+    function deleteBlockItem(secIdx, blockIdx, itemIdx) {
+      if (!confirm("Hapus item ini?")) return;
+      sopData.sections[secIdx].blocks[blockIdx].items.splice(itemIdx, 1);
+      persistData("Item dihapus");
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    // Chat Template CRUD
+    function addChatTemplateItem(secIdx, blockIdx) {
+      const label = prompt("Situasi / Judul Template (contoh: Konfirmasi Barang Siap):");
+      if (!label || !label.trim()) return;
+      const teks = prompt("Isi Pesan Template WhatsApp:");
+      if (!teks || !teks.trim()) return;
+      sopData.sections[secIdx].blocks[blockIdx].items.push({
+        label: label.trim(),
+        teks: teks.trim()
+      });
+      persistData("Template chat ditambahkan");
+      renderSections();
+    }
+
+    function editChatTemplateItem(secIdx, blockIdx, itemIdx) {
+      const item = sopData.sections[secIdx].blocks[blockIdx].items[itemIdx];
+      const newLabel = prompt("Edit Situasi / Label Template:", item.label);
+      if (newLabel === null) return;
+      const newTeks = prompt("Edit Isi Pesan Template:", item.teks);
+      if (newTeks === null) return;
+      item.label = newLabel.trim();
+      item.teks = newTeks.trim();
+      persistData("Template chat diperbarui");
+      renderSections();
+    }
+
+    // Tabel CRUD
+    function editTableHeader(secIdx, blockIdx, colIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const updated = prompt("Edit judul kolom:", block.headers[colIdx]);
+      if (updated === null) return;
+      block.headers[colIdx] = updated.trim();
+      persistData("Judul kolom diperbarui");
+      renderSections();
+    }
+
+    function editTableCell(secIdx, blockIdx, rowIdx, colIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const current = block.rows[rowIdx][colIdx];
+      const updated = prompt(`Edit isi [${block.headers[colIdx] || 'Kolom'}]:`, current);
+      if (updated === null) return;
+      block.rows[rowIdx][colIdx] = updated;
+      persistData("Data tabel diperbarui");
+      renderSections();
+    }
+
+    function addTableRow(secIdx, blockIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const colCount = (block.headers || []).length || 2;
+      const newRow = [];
+      for (let i = 0; i < colCount; i++) {
+        const val = prompt(`Isi untuk kolom "${block.headers[i] || ('Kolom ' + (i + 1))}" (boleh dikosongkan):`, "");
+        if (val === null) return;
+        newRow.push(val);
+      }
+      block.rows.push(newRow);
+      persistData("Baris tabel ditambahkan");
+      renderSections();
+    }
+
+    function addTableColumn(secIdx, blockIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const colName = prompt("Nama kolom baru:");
+      if (!colName || !colName.trim()) return;
+      block.headers.push(colName.trim());
+      block.rows.forEach(r => r.push(""));
+      persistData("Kolom baru ditambahkan");
+      renderSections();
+    }
+
+    function deleteTableRow(secIdx, blockIdx, rowIdx) {
+      if (!confirm("Hapus baris tabel ini?")) return;
+      sopData.sections[secIdx].blocks[blockIdx].rows.splice(rowIdx, 1);
+      persistData("Baris tabel dihapus");
+      renderSections();
+    }
+
+    // Edit & Hapus Sub-Blok
+    function renameBlock(secIdx, blockIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const updated = prompt("Edit judul sub-bagian:", block.judul);
+      if (!updated || !updated.trim()) return;
+      block.judul = updated.trim();
+      persistData("Judul sub-bagian diperbarui");
+      renderSections();
+    }
+
+    function deleteBlock(secIdx, blockIdx) {
+      if (!confirm("Hapus seluruh sub-bagian ini beserta isinya?")) return;
+      sopData.sections[secIdx].blocks.splice(blockIdx, 1);
+      persistData("Sub-bagian dihapus");
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    function openAddBlockModal(sectionId) {
+      document.getElementById("blockTargetSectionId").value = sectionId;
+      document.getElementById("newBlockJudul").value = "";
+      document.getElementById("addBlockModal").classList.remove("hidden");
+    }
+
+    function closeAddBlockModal() {
+      document.getElementById("addBlockModal").classList.add("hidden");
+    }
+
+    function submitNewBlock(e) {
+      e.preventDefault();
+      const secId = document.getElementById("blockTargetSectionId").value;
+      const judul = document.getElementById("newBlockJudul").value.trim();
+      const tipe = document.getElementById("newBlockTipe").value;
+
+      const sec = sopData.sections.find(s => s.id === secId);
+      if (!sec) return;
+
+      const newBlock = {
+        id: "b-" + Date.now(),
+        tipe,
+        judul
+      };
+
+      if (tipe === "checklist") {
+        newBlock.items = [{ teks: "Item pemeriksaan 1 (Klik ✏️ untuk mengubah)", checked: false }];
+      } else if (tipe === "chat_templates") {
+        newBlock.items = [{ label: "Situasi Chat", teks: "Halo Kak, kami dari [Nama Toko]..." }];
+      } else if (tipe === "table") {
+        newBlock.headers = ["Kolom 1", "Kolom 2"];
+        newBlock.rows = [["Contoh Data 1", "Contoh Data 2"]];
+      } else {
+        newBlock.items = ["Langkah / poin pertama (Klik ✏️ untuk mengubah)"];
+      }
+
+      sec.blocks.push(newBlock);
+      closeAddBlockModal();
+      persistData("Sub-bagian baru ditambahkan");
+      renderSections();
+      updateChecklistProgress();
+    }
+
+    // Edit / Pindah / Hapus Bab SOP
+    function editSectionHeader(secIdx) {
+      const sec = sopData.sections[secIdx];
+      const newNomor = prompt("Nomor SOP:", sec.nomor);
+      if (newNomor === null) return;
+      const newJudul = prompt("Judul Bab SOP:", sec.judul);
+      if (newJudul === null) return;
+      const newRingkasan = prompt("Tujuan / Ringkasan Bab SOP:", sec.ringkasan || "");
+      if (newRingkasan === null) return;
+
+      sec.nomor = newNomor.trim() || sec.nomor;
+      sec.judul = newJudul.trim() || sec.judul;
+      sec.ringkasan = newRingkasan.trim();
+
+      persistData("Bab SOP diperbarui");
+      renderAll();
+    }
+
+    function moveSection(secIdx, direction) {
+      const targetIdx = secIdx + direction;
+      if (targetIdx < 0 || targetIdx >= sopData.sections.length) return;
+      const temp = sopData.sections[secIdx];
+      sopData.sections[secIdx] = sopData.sections[targetIdx];
+      sopData.sections[targetIdx] = temp;
+      persistData("Urutan Bab SOP diperbarui");
+      renderAll();
+    }
+
+    function deleteSection(secIdx) {
+      const sec = sopData.sections[secIdx];
+      if (!confirm(`Yakin ingin menghapus Bab "${sec.nomor}. ${sec.judul}"?`)) return;
+      sopData.sections.splice(secIdx, 1);
+      persistData("Bab SOP dihapus");
+      renderAll();
+    }
+
+    // Modal Tambah Bab SOP Baru
+    function openAddSectionModal() {
+      const nextNum = sopData.sections.filter(s => !String(s.nomor).startsWith("Lamp")).length + 1;
+      document.getElementById("newSecNomor").value = String(nextNum);
+      document.getElementById("newSecJudul").value = "";
+      document.getElementById("newSecRingkasan").value = "";
+      document.getElementById("newSecSteps").value = "";
+      document.getElementById("addSectionModal").classList.remove("hidden");
+    }
+
+    function closeAddSectionModal() {
+      document.getElementById("addSectionModal").classList.add("hidden");
+    }
+
+    function submitNewSection(e) {
+      e.preventDefault();
+      const nomor = document.getElementById("newSecNomor").value.trim();
+      const icon = document.getElementById("newSecIcon").value.trim() || "📌";
+      const kategori = document.getElementById("newSecKategori").value;
+      const judul = document.getElementById("newSecJudul").value.trim();
+      const ringkasan = document.getElementById("newSecRingkasan").value.trim();
+      const rawSteps = document.getElementById("newSecSteps").value.trim();
+
+      const stepLines = rawSteps
+        ? rawSteps.split("\n").map(s => s.trim()).filter(Boolean)
+        : ["Langkah pertama (Klik Mode Edit untuk menambah/mengubah langkah)"];
+
+      const newSec = {
+        id: "sop-custom-" + Date.now(),
+        nomor,
+        judul,
+        kategori,
+        icon,
+        ringkasan,
+        blocks: [
+          {
+            id: "b-" + Date.now(),
+            tipe: "steps",
+            judul: "Langkah Kerja",
+            items: stepLines
+          }
+        ]
+      };
+
+      sopData.sections.push(newSec);
+      closeAddSectionModal();
+      persistData(`SOP "${judul}" berhasil ditambahkan!`);
+      renderAll();
+
+      setTimeout(() => {
+        const el = document.getElementById(newSec.id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    }
+
+    // Modal Metadata Info Toko
+    function openMetadataModal() {
+      const m = sopData.metadata;
+      document.getElementById("formNamaToko").value = m.nama_toko || "";
+      document.getElementById("formVersi").value = m.versi || "";
+      document.getElementById("formTanggal").value = m.tanggal_berlaku || "";
+      document.getElementById("formDisusun").value = m.disusun_oleh || "";
+      document.getElementById("formDiperiksa").value = m.diperiksa_oleh || "";
+      document.getElementById("formDisetujui").value = m.disetujui_oleh || "";
+      document.getElementById("formBerlaku").value = m.berlaku_untuk || "";
+      document.getElementById("formDeskripsi").value = m.deskripsi || "";
+      document.getElementById("metadataModal").classList.remove("hidden");
+    }
+
+    function closeMetadataModal() {
+      document.getElementById("metadataModal").classList.add("hidden");
+    }
+
+    function saveMetadataForm(e) {
+      e.preventDefault();
+      const m = sopData.metadata;
+      m.nama_toko = document.getElementById("formNamaToko").value.trim() || "[Nama Toko]";
+      m.versi = document.getElementById("formVersi").value.trim();
+      m.tanggal_berlaku = document.getElementById("formTanggal").value.trim();
+      m.disusun_oleh = document.getElementById("formDisusun").value.trim();
+      m.diperiksa_oleh = document.getElementById("formDiperiksa").value.trim();
+      m.disetujui_oleh = document.getElementById("formDisetujui").value.trim();
+      m.berlaku_untuk = document.getElementById("formBerlaku").value.trim();
+      m.deskripsi = document.getElementById("formDeskripsi").value.trim();
+
+      closeMetadataModal();
+      persistData("Identitas Toko & Dokumen berhasil diperbarui!");
+      renderAll();
+    }
+
+    // Collapse / Expand Utilities
+    function toggleSectionCollapse(secId) {
+      if (collapsedSections.has(secId)) {
+        collapsedSections.delete(secId);
+      } else {
+        collapsedSections.add(secId);
+      }
+      renderSections();
+    }
+
+    function expandCollapseAll() {
+      const btn = document.getElementById("expandCollapseBtn");
+      if (collapsedSections.size > 0) {
+        collapsedSections.clear();
+        btn.textContent = "Ringkas Semua";
+      } else {
+        sopData.sections.forEach(s => collapsedSections.add(s.id));
+        btn.textContent = "Buka Semua";
+      }
+      renderSections();
+    }
+
+    function toggleDocControl() {
+      const el = document.getElementById("docControlDetails");
+      const btn = document.getElementById("toggleDocControlBtn");
+      const isHidden = el.classList.toggle("hidden");
+      btn.textContent = isHidden ? "Lihat Detail Pengesahan ▾" : "Sembunyikan Detail ▴";
+    }
+
+    // Sidebar Mobile Drawer
+    function toggleSidebar() {
+      const drawer = document.getElementById("sidebarDrawer");
+      const overlay = document.getElementById("sidebarOverlay");
+      const isClosed = drawer.classList.contains("-translate-x-full");
+      if (isClosed) {
+        drawer.classList.remove("-translate-x-full");
+        overlay.classList.remove("hidden");
+      } else {
+        drawer.classList.add("-translate-x-full");
+        overlay.classList.add("hidden");
+      }
+    }
+
+    function closeSidebarOnMobile() {
+      const drawer = document.getElementById("sidebarDrawer");
+      const overlay = document.getElementById("sidebarOverlay");
+      drawer.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    }
+
+    // Dark Mode
+    function toggleDarkMode() {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("sop_theme", isDark ? "dark" : "light");
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+    }
+
+    // Backup / Restore JSON
+    function exportDataJSON() {
+      const blob = new Blob([JSON.stringify(sopData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sop_data.json";
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("File sop_data.json berhasil diunduh");
+    }
+
+    function importDataJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!imported.metadata || !imported.sections) {
+            alert("Format file JSON tidak sesuai dengan struktur SOP.");
+            return;
+          }
+          sopData = imported;
+          persistData("Data SOP berhasil dimuat dari file JSON!");
+          renderAll();
+        } catch (err) {
+          alert("Gagal membaca file JSON: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetToDefaultSOP() {
+      if (!confirm("Kembalikan seluruh isi SOP ke pengaturan awal? Perubahan yang belum di-backup akan hilang.")) return;
+      sopData = JSON.parse(JSON.stringify(DEFAULT_SOP_DATA));
+      persistData("Data dikembalikan ke SOP awal");
+      renderAll();
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>

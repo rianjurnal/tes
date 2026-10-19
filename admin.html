@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Admin Panel - SOP Toko Komputer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen">
+
+  <!-- LOGIN OVERLAY / MODAL -->
+  <div id="loginScreen" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden p-6 sm:p-8 space-y-6">
+      <div class="text-center space-y-2">
+        <div class="w-16 h-16 rounded-2xl bg-brand-600 text-white mx-auto flex items-center justify-center text-3xl shadow-lg shadow-brand-500/30">
+          🔐
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Admin Panel SOP</h2>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Masukkan PIN Admin untuk mengedit, menambah langkah, dan mempublikasikan SOP.</p>
+      </div>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">PIN / Password Admin</label>
+          <input
+            id="adminPinInput"
+            type="password"
+            autofocus
+            placeholder="Masukkan PIN (Default: 123456)"
+            class="w-full px-4 py-3 text-center text-lg tracking-widest rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 text-slate-900 dark:text-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition"
+          />
+        </div>
+        <div id="loginErrorMsg" class="hidden text-center text-xs font-semibold text-rose-500 bg-rose-50 dark:bg-rose-950/40 p-2 rounded-lg">
+          PIN salah! Default PIN: 123456
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 active:scale-[0.98] text-white font-bold text-sm shadow-md shadow-brand-600/30 transition"
+        >
+          Masuk ke Panel Admin
+        </button>
+      </form>
+
+      <div class="pt-4 border-t border-slate-100 dark:border-slate-700 text-center">
+        <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-brand-600 dark:text-brand-400 hover:underline font-semibold">
+          ← Kembali ke Halaman Utama (Mode Baca)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN APPLICATION -->
+  <div id="adminApp" class="hidden min-h-screen flex flex-col pb-12">
+    
+    <!-- TOP ADMIN HEADER -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-sm">
+            ⚙️
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">Admin Pengelola SOP</h1>
+              <span id="storageModeBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200">
+                Lokal / Standalone
+              </span>
+            </div>
+            <p id="subStoreName" class="text-xs text-slate-500 dark:text-slate-400">[Nama Toko] - Mode Pengeditan Penuh</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Tombol Lihat Web Utama -->
+          <a
+            href="index.html"
+            target="_blank"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition"
+          >
+            <span>👁️ Lihat Web</span>
+          </a>
+
+          <!-- GitHub Sync Setting Button -->
+          <button
+            onclick="openGithubModal()"
+            class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white dark:bg-slate-700 dark:hover:bg-slate-600 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"
+            title="Koneksikan ke GitHub agar perubahan otomatis terbit ke GitHub Pages"
+          >
+            <span>🐙</span>
+            <span class="hidden sm:inline">Set GitHub</span>
+          </button>
+
+          <!-- Simpan & Publish Utama -->
+          <button
+            onclick="saveAndPublishAll()"
+            id="mainPublishBtn"
+            class="px-3 sm:px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/20 active:scale-95 transition"
+          >
+            <span>💾</span>
+            <span>Simpan</span>
+          </button>
+
+          <!-- Logout -->
+          <button
+            onclick="handleLogout()"
+            class="p-2 rounded-xl text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-slate-700 transition"
+            title="Keluar dari Admin"
+          >
+            🚪
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-1 w-full space-y-6">
+
+      <!-- QUICK STATS & ACTIONS BAR -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between shadow-xs">
+          <span class="text-xs text-slate-400 font-semibold uppercase">Total Bab SOP</span>
+          <div class="text-2xl font-black text-brand-600 dark:text-brand-400 mt-1" id="statTotalSop">0</div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between shadow-xs">
+          <span class="text-xs text-slate-400 font-semibold uppercase">Nama Toko</span>
+          <div class="text-sm font-bold text-slate-800 dark:text-white truncate mt-1" id="statNamaToko">-</div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between shadow-xs">
+          <span class="text-xs text-slate-400 font-semibold uppercase">Status GitHub API</span>
+          <div class="text-xs font-bold text-slate-700 dark:text-slate-300 mt-1 flex items-center gap-1" id="statGithubStatus">
+            <span class="w-2 h-2 rounded-full bg-slate-400"></span> Belum dikonfigurasi
+          </div>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-center gap-1.5 shadow-xs">
+          <button onclick="openNewSopModal()" class="w-full py-2 px-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition flex items-center justify-center gap-1">
+            <span>➕</span> Tambah Bab Baru
+          </button>
+          <button onclick="openMetadataModal()" class="w-full py-1.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-semibold transition">
+            ⚙️ Edit Info Toko
+          </button>
+        </div>
+      </div>
+
+      <!-- SEARCH & FILTER -->
+      <div class="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white dark:bg-slate-800 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs">
+        <div class="relative w-full sm:max-w-md">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
+          <input
+            id="adminSearchInput"
+            type="text"
+            oninput="handleSearch(this.value)"
+            placeholder="Cari bab, langkah kerja, atau kata kunci..."
+            class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500"
+          />
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0" id="adminCategoryPills">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- SOP SECTIONS EDITOR LIST -->
+      <div id="sectionsListContainer" class="space-y-4">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm font-semibold flex items-center gap-2.5">
+    <span id="toastIcon">✅</span>
+    <span id="toastMsg">Tersimpan</span>
+  </div>
+
+  <!-- MODAL: GITHUB API CONFIGURATION -->
+  <div id="githubModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🐙</span>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white">Hubungkan ke Repository GitHub</h3>
+        </div>
+        <button onclick="closeGithubModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+        Dengan menghubungkan GitHub Token di sini, tombol <strong>"Simpan & Publish"</strong> akan <strong>langsung memperbarui file <code class="bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded">sop_data.json</code> di GitHub Anda secara otomatis</strong>! Seluruh HP karyawan yang membuka GitHub Pages otomatis membaca SOP terbaru tanpa upload ulang file.
+      </p>
+
+      <form onsubmit="saveGithubConfig(event)" class="space-y-3.5 text-xs sm:text-sm">
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">GitHub Username / Organisasi</label>
+          <input id="ghOwner" type="text" placeholder="Contoh: nama-akun-anda" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Repository</label>
+          <input id="ghRepo" type="text" placeholder="Contoh: SOPTokoq atau sop-toko" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Branch</label>
+          <input id="ghBranch" type="text" value="main" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">GitHub Personal Access Token (PAT)</label>
+          <input id="ghToken" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          <p class="text-[11px] text-slate-400 mt-1">Dibuat di GitHub: <em>Settings -> Developer settings -> Personal access tokens (Tokens classic)</em> dengan centang izin <strong>repo</strong>. Token disimpan aman hanya di browser perangkat ini.</p>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-700">
+          <button type="button" onclick="closeGithubModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-xs font-semibold">Tutup</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-semibold">Simpan Konfigurasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT METADATA TOKO -->
+  <div id="metadataModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">⚙️ Identitas Toko & Dokumen SOP</h3>
+        <button onclick="closeMetadataModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <form onsubmit="saveMetadata(event)" class="space-y-3.5 text-xs sm:text-sm max-h-[75vh] overflow-y-auto pr-1">
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Toko Komputer</label>
+          <input id="metaNamaToko" type="text" required class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 font-bold" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Versi Dokumen</label>
+            <input id="metaVersi" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tanggal Berlaku</label>
+            <input id="metaTanggal" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Disetujui Oleh (Pemilik / Pimpinan)</label>
+          <input id="metaDisetujui" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Berlaku Untuk</label>
+          <input id="metaBerlaku" type="text" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Ganti PIN Admin</label>
+          <input id="metaPin" type="password" placeholder="Biarkan kosong jika tidak ingin ganti PIN" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Deskripsi Singkat</label>
+          <textarea id="metaDeskripsi" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"></textarea>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-700">
+          <button type="button" onclick="closeMetadataModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-xs font-semibold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold">Simpan Informasi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH BAB SOP BARU -->
+  <div id="newSopModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">➕ Tambah Bab SOP Baru</h3>
+        <button onclick="closeNewSopModal()" class="text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <form onsubmit="submitNewSop(event)" class="space-y-3.5 text-xs sm:text-sm">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nomor Bab</label>
+            <input id="newSopNomor" type="text" required placeholder="19" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 font-bold" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Ikon Emoji</label>
+            <input id="newSopIcon" type="text" value="📌" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-center" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kategori</label>
+            <select id="newSopKategori" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700">
+              <option value="Operasional Harian">Operasional Harian</option>
+              <option value="Layanan Servis">Layanan Servis</option>
+              <option value="Penjualan & Pelanggan">Penjualan & Pelanggan</option>
+              <option value="Stok & Keuangan">Stok & Keuangan</option>
+              <option value="Umum & Manajemen">Umum & Manajemen</option>
+              <option value="Lampiran Form Kerja">Lampiran Form Kerja</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Judul SOP Baru</label>
+          <input id="newSopJudul" type="text" required placeholder="Contoh: SOP Penanganan Servis Antar-Jemput" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700" />
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Tujuan / Ringkasan</label>
+          <textarea id="newSopRingkasan" rows="2" placeholder="Jelaskan tujuan SOP ini..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Langkah-Langkah Awal (1 langkah per baris)</label>
+          <textarea id="newSopSteps" rows="4" placeholder="Langkah 1: Pelanggan mengajukan permintaan&#10;Langkah 2: Admin mendata alamat..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"></textarea>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-700">
+          <button type="button" onclick="closeNewSopModal()" class="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-xs font-semibold">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold">Tambahkan Bab SOP</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    const DEFAULT_PIN = "123456";
+    let adminPin = localStorage.getItem("sop_admin_pin") || DEFAULT_PIN;
+    let sopData = null;
+    let activeCategory = "Semua";
+    let searchQuery = "";
+    let isPythonServer = false;
+
+    // GitHub Config
+    let githubConfig = {
+      owner: localStorage.getItem("gh_owner") || "",
+      repo: localStorage.getItem("gh_repo") || "",
+      branch: localStorage.getItem("gh_branch") || "main",
+      token: localStorage.getItem("gh_token") || ""
+    };
+
+    async function initAdmin() {
+      // Periksa apakah sesi login tersimpan
+      if (sessionStorage.getItem("admin_authenticated") === "true") {
+        unlockAdminUI();
+      }
+
+      await loadData();
+      renderAll();
+    }
+
+    async function loadData() {
+      // Coba load dari server python terlebih dahulu
+      try {
+        const res = await fetch("./api/sop", { cache: "no-store" });
+        if (res.ok) {
+          sopData = await res.json();
+          isPythonServer = true;
+          document.getElementById("storageModeBadge").textContent = "Terhubung Server Python (Otomatis Simpan ke File)";
+          document.getElementById("storageModeBadge").className = "px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200";
+          return;
+        }
+      } catch (e) {}
+
+      // Coba load dari localStorage perangkat
+      const local = localStorage.getItem("sop_toko_komputer_data_v1");
+      if (local) {
+        try {
+          sopData = JSON.parse(local);
+          return;
+        } catch(e) {}
+      }
+
+      // Fallback load sop_data.json statis
+      try {
+        const fileRes = await fetch("./sop_data.json", { cache: "no-store" });
+        if (fileRes.ok) {
+          sopData = await fileRes.json();
+        }
+      } catch(e) {}
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById("adminPinInput").value.trim();
+      if (input === adminPin) {
+        sessionStorage.setItem("admin_authenticated", "true");
+        unlockAdminUI();
+      } else {
+        document.getElementById("loginErrorMsg").classList.remove("hidden");
+      }
+    }
+
+    function unlockAdminUI() {
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("adminApp").classList.remove("hidden");
+      updateGithubBadge();
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem("admin_authenticated");
+      location.reload();
+    }
+
+    function renderAll() {
+      if (!sopData) return;
+      document.getElementById("subStoreName").textContent = `${sopData.metadata.nama_toko || '[Nama Toko]'} - Pengaturan & Penambahan SOP`;
+      document.getElementById("statNamaToko").textContent = sopData.metadata.nama_toko || "-";
+      document.getElementById("statTotalSop").textContent = sopData.sections ? sopData.sections.length : 0;
+
+      renderCategories();
+      renderSections();
+    }
+
+    function renderCategories() {
+      const cats = ["Semua", ...new Set((sopData.sections || []).map(s => s.kategori || "Lainnya"))];
+      const container = document.getElementById("adminCategoryPills");
+      container.innerHTML = cats.map(cat => {
+        const active = activeCategory === cat;
+        return `
+          <button
+            onclick="setCategory('${cat}')"
+            class="px-2.5 py-1 rounded-lg text-xs font-bold transition shrink-0 ${active ? 'bg-brand-600 text-white shadow-xs' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}"
+          >
+            ${cat}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function setCategory(cat) {
+      activeCategory = cat;
+      renderCategories();
+      renderSections();
+    }
+
+    function handleSearch(q) {
+      searchQuery = q.toLowerCase().trim();
+      renderSections();
+    }
+
+    function getFilteredSections() {
+      if (!sopData || !sopData.sections) return [];
+      return sopData.sections.filter(sec => {
+        if (activeCategory !== "Semua" && sec.kategori !== activeCategory) return false;
+        if (!searchQuery) return true;
+        return JSON.stringify(sec).toLowerCase().includes(searchQuery);
+      });
+    }
+
+    function renderSections() {
+      const container = document.getElementById("sectionsListContainer");
+      const filtered = getFilteredSections();
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-400">Tidak ada SOP yang sesuai.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map((sec) => {
+        const realIdx = sopData.sections.findIndex(s => s.id === sec.id);
+        return `
+          <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs overflow-hidden">
+            <!-- Header Bab -->
+            <div class="p-4 sm:p-5 bg-slate-50/80 dark:bg-slate-700/40 border-b border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/40 border border-brand-200 dark:border-brand-800 flex items-center justify-center text-xl shrink-0">
+                  ${sec.icon || "📌"}
+                </span>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-brand-600 text-white">SOP ${sec.nomor}</span>
+                    <span class="text-xs text-slate-400 font-medium">${sec.kategori}</span>
+                  </div>
+                  <h3 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white truncate mt-0.5">${sec.judul}</h3>
+                </div>
+              </div>
+
+              <!-- Action Controls Bab -->
+              <div class="flex items-center gap-1.5">
+                <button onclick="editSectionHeader(${realIdx})" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
+                  ✏️ Edit Judul
+                </button>
+                <button onclick="moveSection(${realIdx}, -1)" class="p-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200" title="Pindah Atas">↑</button>
+                <button onclick="moveSection(${realIdx}, 1)" class="p-1.5 rounded-lg text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200" title="Pindah Bawah">↓</button>
+                <button onclick="deleteSection(${realIdx})" class="p-1.5 rounded-lg text-xs bg-rose-50 hover:bg-rose-100 text-rose-600 dark:bg-rose-950/40" title="Hapus Bab">🗑️</button>
+              </div>
+            </div>
+
+            <!-- Body Bab & Sub-bagian -->
+            <div class="p-4 sm:p-5 space-y-4">
+              ${sec.ringkasan ? `<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/20 p-3 rounded-xl border-l-4 border-brand-500">${sec.ringkasan}</p>` : ''}
+
+              <!-- Sub-blocks -->
+              <div class="space-y-4">
+                ${(sec.blocks || []).map((block, bIdx) => renderAdminBlock(realIdx, bIdx, block)).join('')}
+              </div>
+
+              <!-- Tombol Tambah Sub-Bagian / Langkah Baru -->
+              <div class="pt-3 border-t border-dashed border-slate-200 dark:border-slate-700 flex flex-wrap gap-2 items-center justify-between">
+                <span class="text-xs text-slate-400">Kelola rincian langkah pada bab ini</span>
+                <button onclick="addBlockToSection(${realIdx})" class="px-3 py-1.5 rounded-xl bg-brand-50 hover:bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 font-bold text-xs border border-brand-200 dark:border-brand-800">
+                  ＋ Tambah Bagian Baru (Langkah/Checklist/Tabel)
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderAdminBlock(secIdx, blockIdx, block) {
+      let itemsListHtml = '';
+
+      if (block.tipe === "steps" || block.tipe === "list" || block.tipe === "alert") {
+        itemsListHtml = (block.items || []).map((it, iIdx) => `
+          <div class="flex items-center justify-between gap-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700 text-xs">
+            <div class="flex items-start gap-2 flex-1">
+              <span class="font-bold text-slate-400">${iIdx + 1}.</span>
+              <span class="text-slate-700 dark:text-slate-200">${it}</span>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button onclick="editBlockItem(${secIdx}, ${blockIdx}, ${iIdx})" class="px-1.5 py-0.5 rounded text-[11px] bg-amber-100 text-amber-800">✏️</button>
+              <button onclick="moveBlockItem(${secIdx}, ${blockIdx}, ${iIdx}, -1)" class="px-1.5 py-0.5 rounded text-[11px] bg-slate-200 dark:bg-slate-600">↑</button>
+              <button onclick="moveBlockItem(${secIdx}, ${blockIdx}, ${iIdx}, 1)" class="px-1.5 py-0.5 rounded text-[11px] bg-slate-200 dark:bg-slate-600">↓</button>
+              <button onclick="deleteBlockItem(${secIdx}, ${blockIdx}, ${iIdx})" class="px-1.5 py-0.5 rounded text-[11px] bg-rose-100 text-rose-700">🗑️</button>
+            </div>
+          </div>
+        `).join("");
+      } else if (block.tipe === "checklist") {
+        itemsListHtml = (block.items || []).map((it, iIdx) => `
+          <div class="flex items-center justify-between gap-2 p-2 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-800/40 text-xs">
+            <span class="text-slate-700 dark:text-slate-200">☑️ ${it.teks}</span>
+            <div class="flex items-center gap-1">
+              <button onclick="editChecklistText(${secIdx}, ${blockIdx}, ${iIdx})" class="px-1.5 py-0.5 rounded text-[11px] bg-amber-100 text-amber-800">✏️</button>
+              <button onclick="deleteBlockItem(${secIdx}, ${blockIdx}, ${iIdx})" class="px-1.5 py-0.5 rounded text-[11px] bg-rose-100 text-rose-700">🗑️</button>
+            </div>
+          </div>
+        `).join("");
+      } else if (block.tipe === "chat_templates") {
+        itemsListHtml = (block.items || []).map((it, iIdx) => `
+          <div class="p-2 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 text-xs space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-emerald-800 dark:text-emerald-300">💬 ${it.label}</span>
+              <div class="flex items-center gap-1">
+                <button onclick="editChatTemplate(${secIdx}, ${blockIdx}, ${iIdx})" class="px-1.5 py-0.5 rounded text-[11px] bg-amber-100 text-amber-800">✏️</button>
+                <button onclick="deleteBlockItem(${secIdx}, ${blockIdx}, ${iIdx})" class="px-1.5 py-0.5 rounded text-[11px] bg-rose-100 text-rose-700">🗑️</button>
+              </div>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 italic">"${it.teks}"</p>
+          </div>
+        `).join("");
+      } else if (block.tipe === "table") {
+        itemsListHtml = `
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full border border-slate-200 dark:border-slate-700 rounded-lg">
+              <thead class="bg-slate-100 dark:bg-slate-700">
+                <tr>
+                  ${(block.headers || []).map((h, hIdx) => `<th class="p-2 text-left font-bold border-b border-slate-200 dark:border-slate-700">${h} <button onclick="editTableHeader(${secIdx}, ${blockIdx}, ${hIdx})" class="text-amber-600">✏️</button></th>`).join('')}
+                  <th class="w-10"></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${(block.rows || []).map((row, rIdx) => `
+                  <tr class="border-b border-slate-100 dark:border-slate-700/50">
+                    ${row.map((cell, cIdx) => `<td class="p-2">${cell || '-'} <button onclick="editTableCell(${secIdx}, ${blockIdx}, ${rIdx}, ${cIdx})" class="text-amber-600">✏️</button></td>`).join('')}
+                    <td class="p-2 text-right"><button onclick="deleteTableRow(${secIdx}, ${blockIdx}, ${rIdx})" class="text-rose-600">🗑️</button></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2 bg-white dark:bg-slate-800/80">
+          <div class="flex items-center justify-between gap-2">
+            <h4 class="font-bold text-xs sm:text-sm text-slate-800 dark:text-white flex items-center gap-1.5">
+              <span>📂</span> ${block.judul}
+              <span class="text-[10px] font-normal text-slate-400">(${block.tipe})</span>
+            </h4>
+            <div class="flex items-center gap-1">
+              <button onclick="renameBlock(${secIdx}, ${blockIdx})" class="px-2 py-0.5 rounded text-[11px] bg-slate-100 dark:bg-slate-700">✏️ Judul</button>
+              <button onclick="deleteBlock(${secIdx}, ${blockIdx})" class="px-2 py-0.5 rounded text-[11px] bg-rose-50 text-rose-600">🗑️ Hapus</button>
+            </div>
+          </div>
+
+          <div class="space-y-1.5">${itemsListHtml}</div>
+
+          <!-- Add Item Button for this Block -->
+          <div class="pt-2">
+            ${block.tipe === 'table' ? `
+              <button onclick="addTableRow(${secIdx}, ${blockIdx})" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">＋ Tambah Baris</button>
+            ` : `
+              <button onclick="addItemToBlock(${secIdx}, ${blockIdx})" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">＋ Tambah Item Baru</button>
+            `}
+          </div>
+        </div>
+      `;
+    }
+
+    // CRUD FUNCTIONS
+    function addItemToBlock(secIdx, blockIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      if (block.tipe === 'checklist') {
+        const teks = prompt("Masukkan item checklist baru:");
+        if (!teks || !teks.trim()) return;
+        block.items.push({ teks: teks.trim(), checked: false });
+      } else if (block.tipe === 'chat_templates') {
+        const label = prompt("Situasi / Label Chat:");
+        if (!label) return;
+        const teks = prompt("Isi Template Pesan WhatsApp:");
+        if (!teks) return;
+        block.items.push({ label: label.trim(), teks: teks.trim() });
+      } else {
+        const val = prompt("Masukkan langkah / item baru:");
+        if (!val || !val.trim()) return;
+        block.items.push(val.trim());
+      }
+      autoSaveLocal("Item ditambahkan");
+      renderSections();
+    }
+
+    function editBlockItem(secIdx, blockIdx, iIdx) {
+      const items = sopData.sections[secIdx].blocks[blockIdx].items;
+      const res = prompt("Edit langkah:", items[iIdx]);
+      if (res === null) return;
+      items[iIdx] = res.trim();
+      autoSaveLocal("Item diperbarui");
+      renderSections();
+    }
+
+    function editChecklistText(secIdx, blockIdx, iIdx) {
+      const item = sopData.sections[secIdx].blocks[blockIdx].items[iIdx];
+      const res = prompt("Edit teks checklist:", item.teks);
+      if (res === null) return;
+      item.teks = res.trim();
+      autoSaveLocal("Checklist diperbarui");
+      renderSections();
+    }
+
+    function editChatTemplate(secIdx, blockIdx, iIdx) {
+      const item = sopData.sections[secIdx].blocks[blockIdx].items[iIdx];
+      const l = prompt("Edit Label:", item.label);
+      if (l === null) return;
+      const t = prompt("Edit Pesan:", item.teks);
+      if (t === null) return;
+      item.label = l.trim();
+      item.teks = t.trim();
+      autoSaveLocal("Template diperbarui");
+      renderSections();
+    }
+
+    function moveBlockItem(secIdx, blockIdx, iIdx, dir) {
+      const items = sopData.sections[secIdx].blocks[blockIdx].items;
+      const target = iIdx + dir;
+      if (target < 0 || target >= items.length) return;
+      const tmp = items[iIdx];
+      items[iIdx] = items[target];
+      items[target] = tmp;
+      autoSaveLocal("Urutan diperbarui");
+      renderSections();
+    }
+
+    function deleteBlockItem(secIdx, blockIdx, iIdx) {
+      if (!confirm("Hapus item ini?")) return;
+      sopData.sections[secIdx].blocks[blockIdx].items.splice(iIdx, 1);
+      autoSaveLocal("Item dihapus");
+      renderSections();
+    }
+
+    function addTableRow(secIdx, blockIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const cols = (block.headers || []).length || 2;
+      const row = [];
+      for (let i = 0; i < cols; i++) {
+        row.push(prompt(`Isi kolom ${block.headers[i] || (i+1)}:`, "") || "");
+      }
+      block.rows.push(row);
+      autoSaveLocal("Baris tabel ditambahkan");
+      renderSections();
+    }
+
+    function editTableCell(secIdx, blockIdx, rIdx, cIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const res = prompt("Edit sel:", block.rows[rIdx][cIdx]);
+      if (res === null) return;
+      block.rows[rIdx][cIdx] = res;
+      autoSaveLocal("Tabel diperbarui");
+      renderSections();
+    }
+
+    function editTableHeader(secIdx, blockIdx, hIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const res = prompt("Edit nama kolom:", block.headers[hIdx]);
+      if (res === null) return;
+      block.headers[hIdx] = res;
+      autoSaveLocal("Kolom diperbarui");
+      renderSections();
+    }
+
+    function deleteTableRow(secIdx, blockIdx, rIdx) {
+      if (!confirm("Hapus baris tabel ini?")) return;
+      sopData.sections[secIdx].blocks[blockIdx].rows.splice(rIdx, 1);
+      autoSaveLocal("Baris dihapus");
+      renderSections();
+    }
+
+    function renameBlock(secIdx, blockIdx) {
+      const block = sopData.sections[secIdx].blocks[blockIdx];
+      const res = prompt("Edit nama bagian:", block.judul);
+      if (!res) return;
+      block.judul = res.trim();
+      autoSaveLocal("Judul bagian diperbarui");
+      renderSections();
+    }
+
+    function deleteBlock(secIdx, blockIdx) {
+      if (!confirm("Hapus bagian ini?")) return;
+      sopData.sections[secIdx].blocks.splice(blockIdx, 1);
+      autoSaveLocal("Bagian dihapus");
+      renderSections();
+    }
+
+    function addBlockToSection(secIdx) {
+      const judul = prompt("Judul bagian baru:");
+      if (!judul) return;
+      const tipe = prompt("Pilih jenis (ketik: steps / checklist / table / chat_templates):", "steps");
+      if (!tipe) return;
+
+      const newB = { id: "b-" + Date.now(), tipe, judul: judul.trim() };
+      if (tipe === "checklist") newB.items = [{ teks: "Pemeriksaan 1", checked: false }];
+      else if (tipe === "chat_templates") newB.items = [{ label: "Template 1", teks: "Pesan..." }];
+      else if (tipe === "table") { newB.headers = ["Kolom 1", "Kolom 2"]; newB.rows = [["Data 1", "Data 2"]]; }
+      else newB.items = ["Langkah pertama"];
+
+      sopData.sections[secIdx].blocks.push(newB);
+      autoSaveLocal("Bagian baru ditambahkan");
+      renderSections();
+    }
+
+    function editSectionHeader(secIdx) {
+      const s = sopData.sections[secIdx];
+      const no = prompt("Nomor Bab:", s.nomor);
+      if (no === null) return;
+      const j = prompt("Judul Bab:", s.judul);
+      if (j === null) return;
+      const r = prompt("Ringkasan / Tujuan:", s.ringkasan || "");
+      if (r === null) return;
+
+      s.nomor = no.trim();
+      s.judul = j.trim();
+      s.ringkasan = r.trim();
+      autoSaveLocal("Bab SOP diperbarui");
+      renderAll();
+    }
+
+    function moveSection(secIdx, dir) {
+      const target = secIdx + dir;
+      if (target < 0 || target >= sopData.sections.length) return;
+      const tmp = sopData.sections[secIdx];
+      sopData.sections[secIdx] = sopData.sections[target];
+      sopData.sections[target] = tmp;
+      autoSaveLocal("Urutan bab diperbarui");
+      renderAll();
+    }
+
+    function deleteSection(secIdx) {
+      if (!confirm(`Hapus seluruh Bab "${sopData.sections[secIdx].judul}"?`)) return;
+      sopData.sections.splice(secIdx, 1);
+      autoSaveLocal("Bab SOP dihapus");
+      renderAll();
+    }
+
+    // NEW SOP MODAL
+    function openNewSopModal() {
+      const nextNo = (sopData.sections || []).length + 1;
+      document.getElementById("newSopNomor").value = nextNo;
+      document.getElementById("newSopJudul").value = "";
+      document.getElementById("newSopRingkasan").value = "";
+      document.getElementById("newSopSteps").value = "";
+      document.getElementById("newSopModal").classList.remove("hidden");
+    }
+
+    function closeNewSopModal() {
+      document.getElementById("newSopModal").classList.add("hidden");
+    }
+
+    function submitNewSop(e) {
+      e.preventDefault();
+      const nomor = document.getElementById("newSopNomor").value.trim();
+      const icon = document.getElementById("newSopIcon").value.trim() || "📌";
+      const kategori = document.getElementById("newSopKategori").value;
+      const judul = document.getElementById("newSopJudul").value.trim();
+      const ringkasan = document.getElementById("newSopRingkasan").value.trim();
+      const stepsRaw = document.getElementById("newSopSteps").value.trim();
+
+      const items = stepsRaw ? stepsRaw.split("\n").map(s => s.trim()).filter(Boolean) : ["Langkah awal"];
+
+      const newSec = {
+        id: "sop-" + Date.now(),
+        nomor,
+        icon,
+        kategori,
+        judul,
+        ringkasan,
+        blocks: [{ id: "b-" + Date.now(), tipe: "steps", judul: "Langkah Kerja", items }]
+      };
+
+      sopData.sections.push(newSec);
+      closeNewSopModal();
+      autoSaveLocal(`Bab "${judul}" berhasil ditambahkan!`);
+      renderAll();
+    }
+
+    // METADATA MODAL
+    function openMetadataModal() {
+      const m = sopData.metadata;
+      document.getElementById("metaNamaToko").value = m.nama_toko || "";
+      document.getElementById("metaVersi").value = m.versi || "";
+      document.getElementById("metaTanggal").value = m.tanggal_berlaku || "";
+      document.getElementById("metaDisetujui").value = m.disetujui_oleh || "";
+      document.getElementById("metaBerlaku").value = m.berlaku_untuk || "";
+      document.getElementById("metaDeskripsi").value = m.deskripsi || "";
+      document.getElementById("metaPin").value = "";
+      document.getElementById("metadataModal").classList.remove("hidden");
+    }
+
+    function closeMetadataModal() {
+      document.getElementById("metadataModal").classList.add("hidden");
+    }
+
+    function saveMetadata(e) {
+      e.preventDefault();
+      const m = sopData.metadata;
+      m.nama_toko = document.getElementById("metaNamaToko").value.trim();
+      m.versi = document.getElementById("metaVersi").value.trim();
+      m.tanggal_berlaku = document.getElementById("metaTanggal").value.trim();
+      m.disetujui_oleh = document.getElementById("metaDisetujui").value.trim();
+      m.berlaku_untuk = document.getElementById("metaBerlaku").value.trim();
+      m.deskripsi = document.getElementById("metaDeskripsi").value.trim();
+
+      const newPin = document.getElementById("metaPin").value.trim();
+      if (newPin) {
+        adminPin = newPin;
+        localStorage.setItem("sop_admin_pin", newPin);
+      }
+
+      closeMetadataModal();
+      autoSaveLocal("Identitas Toko diperbarui");
+      renderAll();
+    }
+
+    // GITHUB SETTINGS MODAL
+    function openGithubModal() {
+      document.getElementById("ghOwner").value = githubConfig.owner;
+      document.getElementById("ghRepo").value = githubConfig.repo;
+      document.getElementById("ghBranch").value = githubConfig.branch;
+      document.getElementById("ghToken").value = githubConfig.token;
+      document.getElementById("githubModal").classList.remove("hidden");
+    }
+
+    function closeGithubModal() {
+      document.getElementById("githubModal").classList.add("hidden");
+    }
+
+    function saveGithubConfig(e) {
+      e.preventDefault();
+      githubConfig.owner = document.getElementById("ghOwner").value.trim();
+      githubConfig.repo = document.getElementById("ghRepo").value.trim();
+      githubConfig.branch = document.getElementById("ghBranch").value.trim() || "main";
+      githubConfig.token = document.getElementById("ghToken").value.trim();
+
+      localStorage.setItem("gh_owner", githubConfig.owner);
+      localStorage.setItem("gh_repo", githubConfig.repo);
+      localStorage.setItem("gh_branch", githubConfig.branch);
+      localStorage.setItem("gh_token", githubConfig.token);
+
+      closeGithubModal();
+      updateGithubBadge();
+      showToast("Konfigurasi GitHub tersimpan!");
+    }
+
+    function updateGithubBadge() {
+      const badge = document.getElementById("statGithubStatus");
+      if (githubConfig.token && githubConfig.owner && githubConfig.repo) {
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> ${githubConfig.owner}/${githubConfig.repo} (${githubConfig.branch})`;
+        badge.className = "text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1";
+      } else {
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-400"></span> Belum dikonfigurasi`;
+        badge.className = "text-xs font-bold text-slate-500 mt-1 flex items-center gap-1";
+      }
+    }
+
+    // PERSISTENCE & GITHUB DIRECT SAVE
+    function autoSaveLocal(msg) {
+      localStorage.setItem("sop_toko_komputer_data_v1", JSON.stringify(sopData));
+      if (isPythonServer) {
+        fetch("./api/sop", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sopData)
+        }).catch(() => {});
+      }
+      showToast(msg);
+    }
+
+    async function saveAndPublishAll() {
+      const btn = document.getElementById("mainPublishBtn");
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳</span> <span>Menyimpan...</span>`;
+
+      // 1. Simpan ke LocalStorage
+      localStorage.setItem("sop_toko_komputer_data_v1", JSON.stringify(sopData));
+
+      let savedSources = [];
+
+      // 2. Jika di Server Python lokal
+      if (isPythonServer) {
+        try {
+          const res = await fetch("./api/sop", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sopData)
+          });
+          if (res.ok) savedSources.push("Server Python Lokal (sop_data.json)");
+        } catch (e) {}
+      }
+
+      // 3. Jika GitHub Token diisi, simpan langsung ke GitHub via GitHub REST API!
+      if (githubConfig.token && githubConfig.owner && githubConfig.repo) {
+        try {
+          const path = "sop_data.json";
+          const apiUrl = `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${path}`;
+
+          // Ambil SHA file lama jika sudah ada
+          let sha = null;
+          const getRes = await fetch(apiUrl + `?ref=${githubConfig.branch}`, {
+            headers: {
+              "Authorization": `token ${githubConfig.token}`,
+              "Accept": "application/vnd.github.v3+json"
+            }
+          });
+          if (getRes.ok) {
+            const data = await getRes.json();
+            sha = data.sha;
+          }
+
+          // Commit perubahan ke GitHub
+          const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(sopData, null, 2))));
+          const putRes = await fetch(apiUrl, {
+            method: "PUT",
+            headers: {
+              "Authorization": `token ${githubConfig.token}`,
+              "Accept": "application/vnd.github.v3+json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: `Update SOP Toko via Admin Panel [${new Date().toLocaleString()}]`,
+              content: contentEncoded,
+              branch: githubConfig.branch,
+              sha: sha || undefined
+            })
+          });
+
+          if (putRes.ok) {
+            savedSources.push("GitHub Repository (Auto-Publish)");
+          } else {
+            const errData = await putRes.json();
+            console.error(errData);
+            alert("Gagal simpan ke GitHub: " + (errData.message || "Periksa token Anda"));
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = `<span>💾</span> <span>Simpan</span>`;
+
+      if (savedSources.length > 0) {
+        showToast("Tersimpan ke: " + savedSources.join(" & "));
+      } else {
+        // Tawarkan unduh file sop_data.json jika di static tanpa GitHub token
+        const blob = new Blob([JSON.stringify(sopData, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "sop_data.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Tersimpan di browser & diunduh sebagai sop_data.json");
+      }
+    }
+
+    function showToast(text) {
+      const t = document.getElementById("toast");
+      document.getElementById("toastMsg").textContent = text;
+      t.classList.remove("hidden");
+      clearTimeout(window._toastT);
+      window._toastT = setTimeout(() => t.classList.add("hidden"), 3000);
+    }
+
+    window.addEventListener("DOMContentLoaded", initAdmin);
+  </script>
+</body>
+</html>
